@@ -246,7 +246,10 @@ class MigrationEngine:
                         # Find or create row for this target class
                         if not relocated_rows[target_class] or \
                                 len(relocated_rows[target_class]) < report["rows_processed"]:
-                            relocated_rows[target_class].append({})
+                            # Carry passthrough fields (IDs) into relocated rows
+                            id_fields = {self.passthroughs[k]: transformed.get(self.passthroughs[k], "")
+                                         for k in self.passthroughs if self.passthroughs[k] in transformed}
+                            relocated_rows[target_class].append(id_fields)
                         relocated_rows[target_class][-1][target_field] = value
 
                 output_rows.append(transformed)
