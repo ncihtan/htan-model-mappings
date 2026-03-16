@@ -551,11 +551,20 @@ class MigrationEngine:
             cls, field = parts
             # Check main result
             if field in result and result[field] in corrections:
-                result[field] = corrections[result[field]]
+                correction = corrections[result[field]]
+                if isinstance(correction, dict) and correction.get("__SPLIT__"):
+                    # Combo drug → split into comma-separated for array wrapping
+                    result[field] = ", ".join(correction.get("split_into", []))
+                else:
+                    result[field] = correction
             # Check relocated fields
             relocated_key = f"{cls}/{field}"
             if relocated_key in relocated and relocated[relocated_key] in corrections:
-                relocated[relocated_key] = corrections[relocated[relocated_key]]
+                correction = corrections[relocated[relocated_key]]
+                if isinstance(correction, dict) and correction.get("__SPLIT__"):
+                    relocated[relocated_key] = ", ".join(correction.get("split_into", []))
+                else:
+                    relocated[relocated_key] = correction
 
         # Convert text sentinels in integer fields to -1
         for field in self.integer_sentinel_fields:

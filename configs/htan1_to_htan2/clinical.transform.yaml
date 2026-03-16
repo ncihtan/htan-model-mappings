@@ -534,6 +534,775 @@ value_corrections:
   FollowUp/PROGRESSION_OR_RECURRENCE_ANATOMIC_SITE_UBERON_CODE:
     Not Reported: ''
     unknown: ''
+  Therapy/THERAPEUTIC_AGENTS:
+    radiation:
+      mapped: ''
+    surgery:
+      mapped: ''
+    Radiation:
+      mapped: ''
+    carboplatin+etoposide:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+    osimertinib:
+      mapped: Osimertinib
+    pembrolizumab:
+      mapped: Pembrolizumab
+    cisplatin+etoposide:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Etoposide
+    Folfirinox:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+      - Oxaliplatin
+    LY2835219 (Abemaciclib):
+      mapped: Abemaciclib
+    Taxol:
+      mapped: Paclitaxel
+    Gemcitabine + Abraxane:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine Hydrochloride
+      - Nab-paclitaxel
+    ipilimumab + nivolumab:
+      __SPLIT__: true
+      split_into:
+      - Ipilimumab
+      - Nivolumab
+    carboplatin+pemetrexed:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Pemetrexed
+    Doxorubicin Hydrochloride Liposome (Doxil):
+      mapped: Pegylated Liposomal Doxorubicin Hydrochloride
+    erlotinib:
+      mapped: Erlotinib
+    temozolomide:
+      mapped: Temozolomide
+    FOLFIRINOX:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+      - Oxaliplatin
+    ipilimumab+nivolumab:
+      __SPLIT__: true
+      split_into:
+      - Ipilimumab
+      - Nivolumab
+    carboplatin+etoposide+atezolizumab:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+      - Atezolizumab
+    radiation therapy:
+      mapped: ''
+    MK-3475 (Pembrolizumab):
+      mapped: Pembrolizumab
+    Radiation Therapy:
+      mapped: ''
+    IMMU-132 (Sacituzumab Govitecan):
+      mapped: Sacituzumab Govitecan
+    Folfox:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Oxaliplatin
+    nivolumab:
+      mapped: Nivolumab
+    pembrolizumab/pemetrexed/carboplatin:
+      __SPLIT__: true
+      split_into:
+      - Pembrolizumab
+      - Pemetrexed
+      - Carboplatin
+    Clinical Trial:
+      mapped: ''
+    carboplatin+paclitaxel:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Paclitaxel
+    cisplatin+pemetrexed:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Pemetrexed
+    carboplatin+etoposide+osimertinib:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+      - Osimertinib
+    Doxil:
+      mapped: Pegylated Liposomal Doxorubicin Hydrochloride
+    Carbo/Taxol:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Paclitaxel
+    paclitaxel:
+      mapped: Paclitaxel
+    Ipilimumab + Nivolumab:
+      __SPLIT__: true
+      split_into:
+      - Ipilimumab
+      - Nivolumab
+    BYL 719 (Alpelisib):
+      mapped: Alpelisib
+    Leucovorin:
+      mapped: Leucovorin Calcium
+    Avastin:
+      mapped: Bevacizumab
+    Abraxane:
+      mapped: Nab-paclitaxel
+    FOLFOX:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Oxaliplatin
+    cetuximab:
+      mapped: Cetuximab
+    erlotinib+trametinib:
+      __SPLIT__: true
+      split_into:
+      - Erlotinib
+      - Trametinib
+    atezolizumab:
+      mapped: Atezolizumab
+    cisplatin+vinorelbine:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Vinorelbine
+    gemcitabine:
+      mapped: Gemcitabine
+    valemetostat+irinotecan:
+      __SPLIT__: true
+      split_into:
+      - Valemetostat
+      - Irinotecan
+    irinotecan:
+      mapped: Irinotecan
+    carboplatin+etoposide (rechallenge):
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+    cis-carboplatin+etoposide:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Carboplatin
+      - Etoposide
+    U3-1402:
+      mapped: Patritumab Deruxtecan
+    osimertinib alone:
+      mapped: Osimertinib
+    Pembrolizumab + Pemetrexed + Carboplatin:
+      __SPLIT__: true
+      split_into:
+      - Pembrolizumab
+      - Pemetrexed
+      - Carboplatin
+    trastuzumab deruxtecan:
+      mapped: Trastuzumab Deruxtecan
+    pemetrexed:
+      mapped: Pemetrexed
+    Pegfilgrastim:
+      mapped: ''
+    OP-1250:
+      mapped: ''
+    Xeloda:
+      mapped: Capecitabine
+    Not reported:
+      mapped: ''
+    Gemzar:
+      mapped: Gemcitabine Hydrochloride
+    Olaprib:
+      mapped: Olaparib
+    Folfox + Avastin:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Oxaliplatin
+      - Bevacizumab
+    Folfiri:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+    FOLFOX + Avastin:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Oxaliplatin
+      - Bevacizumab
+    afatinib:
+      mapped: Afatinib
+    SC16LD6.5:
+      mapped: ''
+    carboplatin+pemetrexed+bevacizumab:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Pemetrexed
+      - Bevacizumab
+    docetaxel+ramucirumab:
+      __SPLIT__: true
+      split_into:
+      - Docetaxel
+      - Ramucirumab
+    osimertinib+bevacizumab:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Bevacizumab
+    cisplatin+pemetrexed+pembrolizumab:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Pemetrexed
+      - Pembrolizumab
+    lurbinectidin:
+      mapped: Lurbinectedin
+    carboplatin+etoposide+osimertinib (rechallenge):
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+      - Osimertinib
+    docetaxel:
+      mapped: Docetaxel
+    cis/carboplatin+etoposide:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Carboplatin
+      - Etoposide
+    Cisplatin/Pemetrexed:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Pemetrexed
+    DOCETAXEL:
+      mapped: Docetaxel
+    DS-8201a (Enhertu):
+      mapped: Trastuzumab Deruxtecan
+    Abraxane (Albumin-bound Paclitaxel):
+      mapped: Nab-paclitaxel
+    Ado-trastuzumab Emtansine (TDM1):
+      mapped: Trastuzumab Emtansine
+    GTX024:
+      mapped: ''
+    Doxorubicin Liposomal:
+      mapped: Pegylated Liposomal Doxorubicin Hydrochloride
+    Doxorubicin HCL:
+      mapped: Doxorubicin Hydrochloride
+    Paclitaxel Protein-Bound:
+      mapped: Nab-paclitaxel
+    CI:
+      mapped: ''
+    Cepcitabine:
+      mapped: Capecitabine
+    Tipiracil:
+      mapped: Trifluridine and Tipiracil Hydrochloride
+    bevacizumab:
+      mapped: Bevacizumab
+    ifosfamide:
+      mapped: Ifosfamide
+    Fostamatinib:
+      mapped: ''
+    CDX 1401:
+      mapped: ''
+    Sirolimus:
+      mapped: ''
+    mirvetuxemab soravtansine:
+      mapped: ''
+    Herceptin:
+      mapped: Trastuzumab
+    5-fu:
+      mapped: Fluorouracil
+    FOLFIRI:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+    Gemcitibine + Abraxane:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine Hydrochloride
+      - Nab-paclitaxel
+    5-FU/Avastin:
+      __SPLIT__: true
+      split_into:
+      - Fluorouracil
+      - Bevacizumab
+    Anastrazole:
+      mapped: Anastrozole
+    Paclitaxel; AC-T:
+      __SPLIT__: true
+      split_into:
+      - Paclitaxel
+      - Doxorubicin Hydrochloride
+      - Cyclophosphamide
+    Cytoxan + Taxotere:
+      __SPLIT__: true
+      split_into:
+      - Cyclophosphamide
+      - Docetaxel
+    Paclitaxel; Carboplatin + Gemcidabine:
+      __SPLIT__: true
+      split_into:
+      - Paclitaxel
+      - Carboplatin
+      - Gemcitabine Hydrochloride
+    Traztuzumab; Pertuzumab:
+      __SPLIT__: true
+      split_into:
+      - Trastuzumab
+      - Pertuzumab
+    ddAC-T:
+      __SPLIT__: true
+      split_into:
+      - Doxorubicin Hydrochloride
+      - Cyclophosphamide
+      - Paclitaxel
+    Perjecta/Herceptin:
+      __SPLIT__: true
+      split_into:
+      - Pertuzumab
+      - Trastuzumab
+    Faslodex + Abemaciclib:
+      __SPLIT__: true
+      split_into:
+      - Fulvestrant
+      - Abemaciclib
+    Nab Paclitaxel:
+      mapped: Nab-paclitaxel
+    Xeloda + Gemcitabine:
+      __SPLIT__: true
+      split_into:
+      - Capecitabine
+      - Gemcitabine Hydrochloride
+    Gemcitabine + Abrazane:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine Hydrochloride
+      - Nab-paclitaxel
+    Folfirinox + guided SBRT:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+      - Oxaliplatin
+    Folfiri + SBRT:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+    Gemzar + Abraxane:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine Hydrochloride
+      - Nab-paclitaxel
+    Gemcitabine + Radiation:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine Hydrochloride
+    mFolfirinox/Folfiri + SBRT:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+      - Oxaliplatin
+    mFOLFOX6:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Oxaliplatin
+    mFOLFIRINOX:
+      __SPLIT__: true
+      split_into:
+      - Leucovorin Calcium
+      - Fluorouracil
+      - Irinotecan Hydrochloride
+      - Oxaliplatin
+    KEYNOTE-522:
+      mapped: ''
+    Gem/Abraxane:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine Hydrochloride
+      - Nab-paclitaxel
+    CellDex Trial:
+      mapped: ''
+    CMF:
+      __SPLIT__: true
+      split_into:
+      - Cyclophosphamide
+      - Methotrexate
+      - Fluorouracil
+    Carbo/Albumin-bound Taxol:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Nab-paclitaxel
+    Carbo/Taxol/Bev:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Paclitaxel
+      - Bevacizumab
+    Bev:
+      mapped: Bevacizumab
+    Pembro/Lenvatinib:
+      __SPLIT__: true
+      split_into:
+      - Pembrolizumab
+      - Lenvatinib
+    DOXIL:
+      mapped: Pegylated Liposomal Doxorubicin Hydrochloride
+    Pembro:
+      mapped: Pembrolizumab
+    Carbo/Taxotere:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Docetaxel
+    Carbo/Abraxane:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Nab-paclitaxel
+    Carbo/Taxol/Gen-1 (Ovation II Study):
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Paclitaxel
+    cisplatin+docetaxel:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Docetaxel
+    cisplatin+paclitaxel:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Paclitaxel
+    carboplatin+premetrexed:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Pemetrexed
+    premetrexed+bevacizumab:
+      __SPLIT__: true
+      split_into:
+      - Pemetrexed
+      - Bevacizumab
+    paclitaxel+trastuzumab:
+      __SPLIT__: true
+      split_into:
+      - Paclitaxel
+      - Trastuzumab
+    gemcitabine+trastuzumab:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine
+      - Trastuzumab
+    ado-trastuzumab emtanisine:
+      mapped: Trastuzumab Emtansine
+    docetaxcel+ramucirumab:
+      __SPLIT__: true
+      split_into:
+      - Docetaxel
+      - Ramucirumab
+    tremelimumab+durvalumab:
+      __SPLIT__: true
+      split_into:
+      - Tremelimumab
+      - Durvalumab
+    oral etoposide:
+      mapped: Etoposide
+    pemetrexed+bevacizumab:
+      __SPLIT__: true
+      split_into:
+      - Pemetrexed
+      - Bevacizumab
+    oral topotecan:
+      mapped: Oral Topotecan Hydrochloride
+    cisplatin+etoposide+atezolizumab:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Etoposide
+      - Atezolizumab
+    temozolomide+ABT888:
+      __SPLIT__: true
+      split_into:
+      - Temozolomide
+      - Veliparib
+    temozolomide alone:
+      mapped: Temozolomide
+    temozolomide (rechallenge):
+      mapped: Temozolomide
+    carbplatin+etoposide:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+    cyclophosphamide+doxorubicin+vincristine:
+      __SPLIT__: true
+      split_into:
+      - Cyclophosphamide
+      - Doxorubicin
+      - Vincristine
+    carboplatin+etoposide+pembrolizumab:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+      - Pembrolizumab
+    cisplatin+etoposide+LDE225:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Etoposide
+      - Sonidegib
+    rovalpituzumab:
+      mapped: Rovalpituzumab Tesirine
+    cyclophosphamide+vincristine+doxorubicin:
+      __SPLIT__: true
+      split_into:
+      - Cyclophosphamide
+      - Vincristine
+      - Doxorubicin
+    topotecan:
+      mapped: Topotecan
+    gemcitabine+cisplatin:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine
+      - Cisplatin
+    cisplatin+pemetrexed+bevacizumab:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Pemetrexed
+      - Bevacizumab
+    cisplatin+osimertinib+etoposide:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Osimertinib
+      - Etoposide
+    gemcitabine+vinorelbine+osimertinib:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine
+      - Vinorelbine
+      - Osimertinib
+    afatanib:
+      mapped: Afatinib
+    EGF816+TNO155:
+      mapped: ''
+    osimertinib+dacomitinib:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Dacomitinib
+    adjuvant cisplatin+vinorelbine:
+      __SPLIT__: true
+      split_into:
+      - Cisplatin
+      - Vinorelbine
+    patritumab deruxtecan:
+      mapped: Patritumab Deruxtecan
+    osimertinib+carboplatin+pemetrexed+bevacizumab:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Carboplatin
+      - Pemetrexed
+      - Bevacizumab
+    osimertinib+gemcitabine:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Gemcitabine
+    nazartinib+investigational:
+      mapped: Nazartinib
+    osimertinib+docetaxel+ramucirumab:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Docetaxel
+      - Ramucirumab
+    trastuzumab:
+      mapped: Trastuzumab
+    carboplatin+etoposide+tarextumab) vs placebo:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Etoposide
+      - ''
+    osimertinib+savolitinib:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Savolitinib
+    osimertinib+crizotinib:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Crizotinib
+    carboplatin+pemetrexed+pembrolizumab:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Pemetrexed
+      - Pembrolizumab
+    ipilmumab+nivolumab:
+      __SPLIT__: true
+      split_into:
+      - Ipilimumab
+      - Nivolumab
+    paclitaxel+osimertinib:
+      __SPLIT__: true
+      split_into:
+      - Paclitaxel
+      - Osimertinib
+    gemcitabine+vinorelbine:
+      __SPLIT__: true
+      split_into:
+      - Gemcitabine
+      - Vinorelbine
+    tarlatamab:
+      mapped: Tarlatamab
+    irinotecan+valemetostat:
+      __SPLIT__: true
+      split_into:
+      - Irinotecan
+      - Valemetostat
+    osimertinib+dacomitnib:
+      __SPLIT__: true
+      split_into:
+      - Osimertinib
+      - Dacomitinib
+    carboplatin+pemetrexed+bevaciuzmab:
+      __SPLIT__: true
+      split_into:
+      - Carboplatin
+      - Pemetrexed
+      - Bevacizumab
+    pemetrexed/cisplatin:
+      __SPLIT__: true
+      split_into:
+      - Pemetrexed
+      - Cisplatin
+    Bevacizumab/pemetrexed/carboplatin:
+      __SPLIT__: true
+      split_into:
+      - Bevacizumab
+      - Pemetrexed
+      - Carboplatin
+    COM701 +/- PD-1 inhibitor:
+      mapped: Anti-PVRIG Monoclonal Antibody COM701
+    DKY709+PDR001:
+      __SPLIT__: true
+      split_into:
+      - IKZF2 Protein Degrader DKY709
+      - ''
+    GEMCITABINE:
+      mapped: Gemcitabine
+    PEMBROLIZUMAB/PEMETREXED/CARBOPLATIN:
+      __SPLIT__: true
+      split_into:
+      - Pembrolizumab
+      - Pemetrexed
+      - Carboplatin
+    DS-1062A:
+      mapped: Datopotamab Deruxtecan
+    Atezolizumab<U+00A0>:
+      mapped: Atezolizumab
+    carboplatin:
+      mapped: Carboplatin
+    DS 1062a:
+      mapped: Datopotamab Deruxtecan
+    Neovax + Ipilimumab + Nivolumab:
+      __SPLIT__: true
+      split_into:
+      - Ipilimumab
+      - Nivolumab
+    19-604:Atezolizumab + Bevacizumab:
+      __SPLIT__: true
+      split_into:
+      - Atezolizumab
+      - Bevacizumab
+    sequential nivo followed by ipi:
+      __SPLIT__: true
+      split_into:
+      - Nivolumab
+      - Ipilimumab
+    ipilimumab:
+      mapped: Ipilimumab
+    ly3009120 (RAF inhibitor):
+      mapped: ''
+    nivolumab + urelumab:
+      __SPLIT__: true
+      split_into:
+      - Nivolumab
+      - Urelumab
+    pembrolizumab + interferon:
+      __SPLIT__: true
+      split_into:
+      - Pembrolizumab
+      - ''
+    encorafenib + binimetinib:
+      __SPLIT__: true
+      split_into:
+      - Encorafenib
+      - Binimetinib
+    LEE011(Ribociclib):
+      mapped: Ribociclib
+    ARRY-380 (Tucatinib):
+      mapped: Tucatinib
+    DS-1062a:
+      mapped: Datopotamab Deruxtecan
+    GDC-0084:
+      mapped: ''
+    Other:
+      mapped: ''
+    Rebastinib:
+      mapped: Rebastinib Tosylate
+    SAR439859:
+      mapped: ''
+    Palbociblib:
+      mapped: Palbociclib
+    sacituzumab govitecan:
+      mapped: Sacituzumab Govitecan
+    pertuzumab:
+      mapped: Pertuzumab
 integer_sentinels:
 - AGE_IN_DAYS_AT_DIAGNOSIS
 - AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS
