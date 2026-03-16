@@ -12,6 +12,8 @@ passthroughs:
     target: "HTAN_PARTICIPANT_ID"
   - source: "HTAN Biospecimen ID"
     target: "HTAN_BIOSPECIMEN_ID"
+  - source: "HTAN Parent ID"
+    target: "HTAN_PARENT_ID"
   - source: "HTAN Data File ID"
     target: "HTAN_DATA_FILE_ID"
 
