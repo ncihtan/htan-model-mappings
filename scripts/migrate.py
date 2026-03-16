@@ -70,6 +70,9 @@ class MigrationEngine:
         # Load defaults
         self.defaults = self.config.get("defaults", [])
 
+        # Load value corrections (final-pass enum fixes)
+        self.value_corrections = self.config.get("value_corrections", {})
+
         # Lookup table cache
         self._lookup_cache: dict[str, dict] = {}
 
@@ -507,12 +510,14 @@ class MigrationEngine:
 
             if struct_type == "field_split":
                 targets = struct.get("targets", [])
+                # Get value mappings from source field to apply to all targets
+                source_key = f"{source_class}/{source_field}"
+                source_value_map = self.value_map.get(source_key, {})
+                mapped_value = source_value_map.get(source_value, source_value)
                 for target in targets:
                     target_field = target.get("field", "")
-                    # For splits, copy the value to all targets
-                    # Value remapping in tier 2 may have already differentiated them
                     if target_field not in result:
-                        result[target_field] = source_value
+                        result[target_field] = mapped_value
 
             elif struct_type == "class_relocation":
                 tgt = struct.get("target", {})
@@ -521,6 +526,21 @@ class MigrationEngine:
                 relocated[f"{target_class}/{target_field}"] = source_value
                 # Remove from current result if it was placed there by tier 1
                 result.pop(target_field, None)
+
+        # Apply value corrections (final-pass enum fixes)
+        for key, corrections in self.value_corrections.items():
+            # key format: "TargetClass/FIELD" or "SourceClass/Field"
+            parts = key.split("/", 1)
+            if len(parts) != 2:
+                continue
+            cls, field = parts
+            # Check main result
+            if field in result and result[field] in corrections:
+                result[field] = corrections[result[field]]
+            # Check relocated fields
+            relocated_key = f"{cls}/{field}"
+            if relocated_key in relocated and relocated[relocated_key] in corrections:
+                relocated[relocated_key] = corrections[relocated[relocated_key]]
 
         # Store relocated fields in a special key for the caller to handle
         if relocated:

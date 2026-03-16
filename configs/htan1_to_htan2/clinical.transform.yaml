@@ -6,7 +6,7 @@ domain: clinical
 # Tier 1 & 2: auto-derived from field-level and value-level SSSOM
 field_mappings: "mappings/htan1_to_htan2/clinical_fields.sssom.tsv"
 value_mappings: "mappings/htan1_to_htan2/clinical_values.sssom.tsv"
-min_confidence: 0.9  # only auto-apply mappings above this threshold
+min_confidence: 0.7  # apply mappings including semantic matches
 
 # Passthrough fields: appear in every BQ table, always carried forward
 # These are inherited from ClinicalRecordAttributes in the LinkML schema
@@ -100,6 +100,55 @@ structural:
   - type: class_relocation
     source: {class: Demographics, field: "Cause of Death Source"}
     target: {class: VitalStatus, field: CAUSE_OF_DEATH_SOURCE}
+
+# Value corrections: applied after all tiers to fix enum mismatches
+# These handle values from relocated fields and fields not covered by value SSSOM
+value_corrections:
+  # Demographics — use target field names
+  Demographics/RACE:
+    "Other": "Unknown"
+    "other": "Unknown"
+  # VitalStatus (relocated from Demographics)
+  VitalStatus/VITAL_STATUS:
+    "Not Reported": "Not reported"
+    "unknown": "Unknown"
+  VitalStatus/CAUSE_OF_DEATH:
+    "Not Applicable": "Other cause"
+    "unknown": "Unknown"
+    "Surgical Complications": "Surgical Complication"
+    "Cardiovascular Disorder NOS": "Cardiovascular Disorder"
+  VitalStatus/CAUSE_OF_DEATH_SOURCE:
+    "unknown": "Other, specify"
+    "Not Reported": "Other, specify"
+    "Cancer Related": "Medical Record"
+    "Not Cancer Related": "Medical Record"
+    "Autopsy": "Autopsy Report"
+    "Obituary": "Relative or Friend"
+  # FollowUp (relocated from Diagnosis + Follow Up table)
+  FollowUp/PROGRESSION_OR_RECURRENCE:
+    "Yes - Progression or Recurrence": "Yes"
+    "no": "No"
+    "unknown": "Unknown"
+  FollowUp/PROGRESSION_OR_RECURRENCE_TYPE:
+    "unknown": "Unknown"
+  FollowUp/DISEASE_RESPONSE:
+    "PD-Progressive Disease": "Progressive Disease"
+    "SD-Stable Disease": "Stable Disease"
+    "PR-Partial Response": "Partial Response"
+    "CR-Complete Response": "Complete Response"
+    "TF-Tumor Free": "No Evidence of Disease"
+    "RD-Responsive Disease": "Partial Response"
+    "Non-CR/Non-PD-Non-CR/Non-PD": "Stable Disease"
+    "MX-Mixed Response": "Not Evaluable"
+    "DU-Disease Unchanged": "Stable Disease"
+    "unknown": "Unknown"
+  FollowUp/ECOG_PERFORMANCE_STATUS:
+    "0.0": "0"
+    "1.0": "1"
+    "2.0": "2"
+    "3.0": "3"
+    "4.0": "4"
+    "5.0": "5"
 
 # Tier 5: defaults for required fields with no source
 defaults:
