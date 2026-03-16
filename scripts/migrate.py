@@ -76,6 +76,9 @@ class MigrationEngine:
         # Integer sentinel fields: text sentinels → -1
         self.integer_sentinel_fields = set(self.config.get("integer_sentinels", []))
 
+        # Array fields: values wrapped as JSON arrays in TSV cells
+        self.array_fields = set(self.config.get("array_fields", []))
+
         # Lookup table cache
         self._lookup_cache: dict[str, dict] = {}
 
@@ -568,6 +571,21 @@ class MigrationEngine:
                             except (ValueError, TypeError):
                                 # Text value in integer field → -1
                                 target[key] = "-1"
+
+        # Wrap array fields as JSON arrays in TSV cells
+        # Split comma-separated values into arrays, strip trailing commas
+        for target in [result, relocated]:
+            for key in list(target.keys()):
+                actual_field = key.split("/")[-1] if "/" in key else key
+                if actual_field in self.array_fields:
+                    val = target[key]
+                    if val and isinstance(val, str):
+                        val = val.strip().rstrip(",").strip()
+                        if val and not val.startswith("["):
+                            items = [v.strip() for v in val.split(",") if v.strip()]
+                            target[key] = json.dumps(items)
+                        elif not val:
+                            target[key] = ""
 
         # Store relocated fields in a special key for the caller to handle
         if relocated:

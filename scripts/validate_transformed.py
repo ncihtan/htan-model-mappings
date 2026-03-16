@@ -87,6 +87,16 @@ def validate_with_json_schema(
                         instance[k] = int(float(v))
                     except (ValueError, TypeError):
                         instance[k] = v
+                elif prop_schema.get("type") == "array":
+                    # Parse JSON arrays from TSV cells
+                    try:
+                        parsed = json.loads(v)
+                        if isinstance(parsed, list):
+                            instance[k] = parsed
+                        else:
+                            instance[k] = v
+                    except (json.JSONDecodeError, ValueError):
+                        instance[k] = v
                 else:
                     instance[k] = v
 

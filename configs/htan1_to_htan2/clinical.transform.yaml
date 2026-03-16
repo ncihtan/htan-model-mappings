@@ -531,6 +531,9 @@ value_corrections:
     Percent: '%'
     Staining: ''
     Description: ''
+  FollowUp/PROGRESSION_OR_RECURRENCE_ANATOMIC_SITE_UBERON_CODE:
+    Not Reported: ''
+    unknown: ''
 integer_sentinels:
 - AGE_IN_DAYS_AT_DIAGNOSIS
 - AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS
@@ -657,3 +660,7 @@ defaults:
   field: TREATMENT_INTENT_TYPE
   default: Unknown
   required: true
+array_fields:
+- TREATMENT_TYPE
+- THERAPEUTIC_AGENTS
+- PROGRESSION_OR_RECURRENCE_ANATOMIC_SITE_UBERON_CODE
