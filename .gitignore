@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.venv/
+*.tmp
+.DS_Store
+
+# Temp files from mapping runs
+tmp/

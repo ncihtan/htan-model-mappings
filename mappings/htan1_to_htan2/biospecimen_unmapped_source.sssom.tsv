@@ -1,0 +1,41 @@
+#curie_map:
+#  skos: http://www.w3.org/2004/02/skos/core#
+#  semapv: https://w3id.org/semapv/vocab/
+#  data_models: https://data.humantumoratlas.org/data_models/
+#  htan2_data_model: https://data.humantumoratlas.org/htan2_data_model/
+#mapping_set_id: https://github.com/ncihtan/htan-model-mappings/mappings/data_models_to_htan2_data_model/biospecimen_unmapped_source
+#mapping_set_description: HTAN Phase 1 biospecimen fields with no equivalent in HTAN Phase 2
+#license: https://creativecommons.org/publicdomain/zero/1.0/
+#mapping_date: 2026-03-16
+subject_id	subject_label	subject_source	predicate_id	object_id	object_label	mapping_justification	confidence	comment
+data_models:Biosample/Biospecimen	Biospecimen	Biosample	skos:noMappingFound			semapv:LogicalReasoning	0.0	Structural reference field in Biosample class; not carried forward to HTAN2
+data_models:Biosample/SRRS Biospecimen	SRRS Biospecimen	Biosample	skos:noMappingFound			semapv:LogicalReasoning	0.0	Structural reference field in Biosample class; not carried forward to HTAN2
+data_models:Biosample/Source HTAN Biospecimen ID	Source HTAN Biospecimen ID	Biosample	skos:noMappingFound			semapv:LogicalReasoning	0.0	Structural reference field in Biosample class; not carried forward to HTAN2
+data_models:Biospecimen/Analyte Biospecimen Type	Analyte Biospecimen Type	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Biospecimen Dimension 2	Biospecimen Dimension 2	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	HTAN1 uses numbered dimensions; HTAN2 uses named longest/shortest dimensions
+data_models:Biospecimen/Blood Biospecimen Type	Blood Biospecimen Type	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Bone Marrow Biospecimen Type	Bone Marrow Biospecimen Type	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Collection Media	Collection Media	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Dimensions Unit	Dimensions Unit	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	HTAN1 uses numbered dimensions; HTAN2 uses named longest/shortest dimensions
+data_models:Biospecimen/Dysplasia Fraction	Dysplasia Fraction	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Fiducial Marker	Fiducial Marker	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/HTAN Parent Biospecimen ID	HTAN Parent Biospecimen ID	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Histology Assessment By	Histology Assessment By	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Histology Assessment Medium	Histology Assessment Medium	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Ischemic Time	Ischemic Time	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Lysis Buffer	Lysis Buffer	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Mounting Medium	Mounting Medium	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Number Proliferating Cells	Number Proliferating Cells	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Other Acquisition Method	Other Acquisition Method	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Percent Eosinophil Infiltration	Percent Eosinophil Infiltration	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Percent Granulocyte Infiltration	Percent Granulocyte Infiltration	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Percent Inflam Infiltration	Percent Inflam Infiltration	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Percent Lymphocyte Infiltration	Percent Lymphocyte Infiltration	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Percent Monocyte Infiltration	Percent Monocyte Infiltration	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Percent Stromal Cells	Percent Stromal Cells	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	Granular histology/composition metric not included in HTAN2 biospecimen model
+data_models:Biospecimen/Portion Weight	Portion Weight	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Storage Method	Storage Method	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Total Volume	Total Volume	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Total Volume Unit	Total Volume Unit	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	HTAN1 uses numbered dimensions; HTAN2 uses named longest/shortest dimensions
+data_models:Biospecimen/Tumor Infiltrating Lymphocytes	Tumor Infiltrating Lymphocytes	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
+data_models:Biospecimen/Urine Biospecimen Type	Urine Biospecimen Type	Biospecimen	skos:noMappingFound			semapv:LogicalReasoning	0.0	No equivalent field in HTAN2 biospecimen model
