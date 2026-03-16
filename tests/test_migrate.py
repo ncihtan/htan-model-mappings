@@ -351,13 +351,14 @@ class TestTier5Defaults:
             [{"Name": "Alice"}],
             ["Name"],
         )
-        output_path = str(tmp_path / "output.tsv")
+        output_dir = str(tmp_path / "out")
 
         engine = MigrationEngine(config_path)
-        report = engine.migrate_file(input_path, "Demo", output_path)
+        report = engine.migrate_file(input_path, "Demo", output_dir)
 
-        # Read output and check default was applied
-        output_content = Path(output_path).read_text()
+        # Read output from report's output_files
+        main_file = list(report["output_files"].values())[0]
+        output_content = Path(main_file).read_text()
         reader = csv.DictReader(StringIO(output_content), delimiter="\t")
         rows = list(reader)
         assert len(rows) == 1
@@ -399,15 +400,16 @@ class TestMigrateFile:
             ],
             ["Race", "Ethnicity"],
         )
-        output_path = str(tmp_path / "output.tsv")
+        output_dir = str(tmp_path / "out")
 
         engine = MigrationEngine(config_path)
-        report = engine.migrate_file(input_path, "Demo", output_path)
+        report = engine.migrate_file(input_path, "Demo", output_dir)
 
         assert report["rows_processed"] == 2
         assert report["rows_succeeded"] == 2
 
-        output_content = Path(output_path).read_text()
+        main_file = list(report["output_files"].values())[0]
+        output_content = Path(main_file).read_text()
         reader = csv.DictReader(StringIO(output_content), delimiter="\t")
         rows = list(reader)
         assert len(rows) == 2

@@ -272,24 +272,36 @@ class MigrationEngine:
                                 f"Required field {col} has no value and no default"
                             )
 
-        # Write main output TSV
-        output_file = Path(output_path)
-        output_file.parent.mkdir(parents=True, exist_ok=True)
-        with open(output_file, "w", newline="") as f:
+        # Determine output directory
+        output_path_obj = Path(output_path)
+        if output_path_obj.suffix in (".tsv", ".csv"):
+            output_dir = output_path_obj.parent
+        else:
+            output_dir = output_path_obj
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        # File naming: htan1_{TargetClass}.tsv
+        # Makes provenance clear: this is HTAN1 data in HTAN2-compatible format
+        source_tag = self.config.get("source_tag", "htan1")
+        target_class_name = self._target_class_for(source_class)
+        main_path = output_dir / f"{source_tag}_{target_class_name}.tsv"
+        with open(main_path, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=target_columns, delimiter="\t", extrasaction="ignore")
             writer.writeheader()
             for row in output_rows:
                 writer.writerow(row)
+        report["output_files"] = {target_class_name: str(main_path)}
 
         # Write relocated class TSVs
         for target_class, rows in relocated_rows.items():
             relocated_cols = sorted({k for r in rows for k in r.keys()})
-            relocated_path = output_file.parent / f"{output_file.stem}_{target_class}{output_file.suffix}"
+            relocated_path = output_dir / f"{source_tag}_{target_class}.tsv"
             with open(relocated_path, "w", newline="") as f:
                 writer = csv.DictWriter(f, fieldnames=relocated_cols, delimiter="\t", extrasaction="ignore")
                 writer.writeheader()
                 for row in rows:
                     writer.writerow(row)
+            report["output_files"][target_class] = str(relocated_path)
             report["relocated_files"][target_class] = str(relocated_path)
 
         # Count transformed values

@@ -1,5 +1,6 @@
 source_model: "ncihtan/data-models@v25.2.1"
 target_model: "ncihtan/htan2-data-model@v1.3.0"
+source_tag: htan1
 domain: assay
 
 # Tier 1 & 2: auto-derived from field-level and value-level SSSOM
