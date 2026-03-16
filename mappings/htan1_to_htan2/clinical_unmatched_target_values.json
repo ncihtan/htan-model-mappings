@@ -1,0 +1,314 @@
+[
+  {
+    "field": "Diagnosis/CLINICAL_T_STAGE",
+    "source_field": "Diagnosis/AJCC Clinical T",
+    "values": [
+      "T5"
+    ]
+  },
+  {
+    "field": "FollowUp/MENOPAUSE_STATUS",
+    "source_field": "Follow Up/Menopause Status",
+    "values": [
+      "Menopausal",
+      "Not Applicable",
+      "Postmenopausal (>12 mo since LMP with no prior ovariectomy)",
+      "Postmenopausal (prior bilateral ovariectomy)",
+      "Premenopausal/Perimenopausal"
+    ]
+  },
+  {
+    "field": "Diagnosis/TUMOR_CLASSIFICATION_CATEGORY",
+    "source_field": "Diagnosis/Classification of Tumor",
+    "values": [
+      "Metastatic",
+      "Not Applicable",
+      "Premalignant",
+      "Prior Primary",
+      "Progression",
+      "Recurrent",
+      "Synchronous Primary",
+      "Xenograft"
+    ]
+  },
+  {
+    "field": "Exposure/ALCOHOL_HISTORY_INDICATOR",
+    "source_field": "Exposure/Alcohol History",
+    "values": [
+      "Data not available",
+      "Not applicable",
+      "Pending",
+      "Refused"
+    ]
+  },
+  {
+    "field": "VitalStatus/CAUSE_OF_DEATH",
+    "source_field": "Demographics/Cause of Death",
+    "values": [
+      "APL Differentiation Syndrome",
+      "Accidental death",
+      "Acute GVHD",
+      "Adult Respiratory Distress Syndrome (ARDS)",
+      "Adverse Event",
+      "Aspiration Pneumonia",
+      "BCNU IP",
+      "Bacterial infection",
+      "Cardiac Disease",
+      "Cardiac failure",
+      "Cardiopulmonary Arrest",
+      "Cardiovascular accident",
+      "Central nervous system(CNS) failure",
+      "Chronic GVHD",
+      "Chronic Obstructive Pulmonary Disease",
+      "Chronic liver disease",
+      "Congestive Heart Failure",
+      "Coronary artery disease (atherosclerosis)",
+      "Dementia (including Alzheimer's disease)",
+      "Diabetes Mellitus",
+      "Disseminated intravascular coagulation (DIC)",
+      "Drug Related",
+      "Failure to Thrive",
+      "Fungal infection",
+      "Gastrointestinal (GI) failure (not liver)",
+      "Gastrointestinal hemorrhage",
+      "Graft Versus Host Disease",
+      "Graft rejection or failure",
+      "HIV/AIDS",
+      "Hemorrhage",
+      "Hemorrhage, not otherwise specified",
+      "Hemorrhagic cystitis",
+      "Hepatitis",
+      "Herpes",
+      "IPS, idiopathic",
+      "IPS, viral, cytomegalovirus(CMV)",
+      "IPS, viral, other",
+      "Immunotherapy-Related",
+      "Infection, NOS",
+      "Infection, organism not identified",
+      "Influenza",
+      "Interstitial Pneumonia (IP) NOS",
+      "Intracranial hemorrhage",
+      "Liver failure (not VOD)",
+      "Multiple Organ Failure",
+      "Myocardial infarction",
+      "Natural causes",
+      "Non-protocol cancer therapy",
+      "Organ failure, not otherwise specified",
+      "Other cause",
+      "Parkinson's Disease",
+      "Persistence or recurrence of underlying disease",
+      "Pneumonia NOS",
+      "Prior malignancy",
+      "Protozoal infection",
+      "Pulmonary Disease",
+      "Pulmonary Embolism",
+      "Pulmonary failure",
+      "Pulmonary hemorrhage",
+      "Radiation IP",
+      "Recurrence/persistence/progression of disease reported for first HSCT",
+      "Renal failure",
+      "Respiratory failure",
+      "Sepsis",
+      "Sinusoidal Obstruction Syndrome",
+      "Suicide",
+      "Thromboembolic",
+      "Thrombosis",
+      "Thrombotic thrombocytopenic purpura (HUS/TTP)",
+      "Unacceptable Toxicity",
+      "Unclassified infection / Infection NOS",
+      "VOD",
+      "Vascular, not otherwise specified",
+      "Veno-occlusive disease (VOD) / sinusodial obstruction syndrome (SOS)",
+      "Viral infection"
+    ]
+  },
+  {
+    "field": "VitalStatus/CAUSE_OF_DEATH_SOURCE",
+    "source_field": "Demographics/Cause of Death Source",
+    "values": [
+      "Other, specify",
+      "Physician",
+      "Relative or Friend"
+    ]
+  },
+  {
+    "field": "MolecularTest/CLINICAL_BIOSPECIMEN_TYPE",
+    "source_field": "Molecular Test/Clinical Biospecimen Type",
+    "values": [
+      "BUCCAL CELL SAMPLE",
+      "FORMALIN FIXED PARAFFIN EMBEDDED TISSUE",
+      "FORMALIN FIXED TISSUE",
+      "FRESH TISSUE",
+      "FROZEN TISSUE",
+      "OTHER BODILY FLUIDS",
+      "STOOL"
+    ]
+  },
+  {
+    "field": "FollowUp/EVIDENCE_OF_RECURRENCE_TYPE",
+    "source_field": "Follow Up/Evidence of Recurrence Type",
+    "values": [
+      "Convincing Image (i.e. CT/PET/MRI)"
+    ]
+  },
+  {
+    "field": "Therapy/INITIAL_DISEASE_STATUS",
+    "source_field": "Therapy/Initial Disease Status",
+    "values": [
+      "Precancerous",
+      "Primary",
+      "Progression or Recurrence"
+    ]
+  },
+  {
+    "field": "Diagnosis/LAST_KNOWN_DISEASE_STATUS",
+    "source_field": "Diagnosis/Last Known Disease Status",
+    "values": [
+      "Distant Metastasis",
+      "Localized Disease",
+      "New Tumor Event",
+      "Regional Disease"
+    ]
+  },
+  {
+    "field": "Diagnosis/METASTASIS_AT_DIAGNOSIS",
+    "source_field": "Diagnosis/Metastasis at Diagnosis",
+    "values": [
+      "Metastatic",
+      "Non-metastatic (confirmed)",
+      "Non-metastatic (unconfirmed)"
+    ]
+  },
+  {
+    "field": "Diagnosis/METHOD_OF_DIAGNOSIS",
+    "source_field": "Diagnosis/Method of Diagnosis",
+    "values": [
+      "Blood Sample",
+      "Histopathology",
+      "Imaging Technique",
+      "Magnetic Resonance Imaging Study File",
+      "Ultrasound Imaging"
+    ]
+  },
+  {
+    "field": "MolecularTest/MOLECULAR_ANALYSIS_METHOD",
+    "source_field": "Molecular Test/Molecular Analysis Method",
+    "values": [
+      "Immunofluorescence",
+      "PCR"
+    ]
+  },
+  {
+    "field": "MolecularTest/MOLECULAR_CONSEQUENCE",
+    "source_field": "Molecular Test/Molecular Consequence",
+    "values": [
+      "Monosomy",
+      "None (inframe)",
+      "Nullisomy",
+      "Trisomy"
+    ]
+  },
+  {
+    "field": "MolecularTest/PATHOGENICITY",
+    "source_field": "Molecular Test/Pathogenicity",
+    "values": [
+      "Not Reported",
+      "Unknown"
+    ]
+  },
+  {
+    "field": "MolecularTest/TEST_ANALYTE_TYPE",
+    "source_field": "Molecular Test/Test Analyte Type",
+    "values": [
+      "Nucleic RNA",
+      "RNA",
+      "cfDNA",
+      "ctDNA"
+    ]
+  },
+  {
+    "field": "Exposure/SMOKING_HISTORY",
+    "source_field": "Exposure/Tobacco Smoking Status",
+    "values": [
+      "Current Every-Day Smoker",
+      "Current Some-Day Smoker",
+      "Former Smoker",
+      "Never Smoker"
+    ]
+  },
+  {
+    "field": "Therapy/TREATMENT_INTENT_TYPE",
+    "source_field": "Therapy/Treatment Intent Type",
+    "values": [
+      "Curative",
+      "Maintenance"
+    ]
+  },
+  {
+    "field": "Therapy/TREATMENT_TYPE",
+    "source_field": "Therapy/Treatment Type",
+    "values": [
+      "3-Dimensional Conformal Radiation Therapy",
+      "Allogeneic Hematopoietic Stem Cell Transplantation",
+      "Autologous Stem Cell Transplantation",
+      "Cellular Therapy",
+      "Electron Beam Radiation Therapy",
+      "High-Dose Rate Brachytherapy",
+      "Intensity-Modulated Radiation Therapy",
+      "Low-Dose Rate Brachytherapy",
+      "Palliative Care",
+      "Pharmacotherapy",
+      "Photon Beam Radiation Therapy",
+      "Proton Beam Radiation Therapy",
+      "Radiofrequency Ablation",
+      "Radiopharmaceutical",
+      "Stereotactic Body Radiation Therapy",
+      "Surgical Procedure"
+    ]
+  },
+  {
+    "field": "MolecularTest/VARIANT_ORIGIN",
+    "source_field": "Molecular Test/Variant Origin",
+    "values": [
+      "Not Reported",
+      "Somatic Mosaic"
+    ]
+  },
+  {
+    "field": "MolecularTest/VARIANT_TYPE",
+    "source_field": "Molecular Test/Variant Type",
+    "values": [
+      "Chimerism"
+    ]
+  },
+  {
+    "field": "VitalStatus/VITAL_STATUS",
+    "source_field": "Demographics/Vital Status",
+    "values": [
+      "Unspecified"
+    ]
+  },
+  {
+    "field": "Demographics/GENDER_IDENTITY",
+    "source_field": "Demographics/Gender",
+    "values": [
+      "Other"
+    ]
+  },
+  {
+    "field": "FollowUp/PROGRESSION_OR_RECURRENCE",
+    "source_field": "Diagnosis/Progression or Recurrence",
+    "values": [
+      "Censored",
+      "Not Allowed to Collect",
+      "Not Applicable"
+    ]
+  },
+  {
+    "field": "FollowUp/PROGRESSION_OR_RECURRENCE_TYPE",
+    "source_field": "Diagnosis/Progression or Recurrence Type",
+    "values": [
+      "Locoregional"
+    ]
+  }
+]

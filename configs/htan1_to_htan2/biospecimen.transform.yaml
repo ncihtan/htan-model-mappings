@@ -1,0 +1,23 @@
+source_model: "ncihtan/data-models@v25.2.1"
+target_model: "ncihtan/htan2-data-model@v1.3.0"
+domain: biospecimen
+
+# Tier 1 & 2: auto-derived from field-level and value-level SSSOM
+field_mappings: "mappings/htan1_to_htan2/biospecimen_fields.sssom.tsv"
+value_mappings: "mappings/htan1_to_htan2/biospecimen_values.sssom.tsv"
+min_confidence: 0.9  # only auto-apply mappings above this threshold
+
+# Tier 3: explicit conversion rules
+conversions:
+  - source: {class: Biospecimen, field: "Acquisition Method Type"}
+    target: {class: Biospecimen, field: ACQUISITION_METHOD_TYPE}
+    type: text_to_ontology
+    lookup: lookups/ncit_diagnosis_to_codes.json
+
+# Tier 4: structural transforms
+structural: []
+
+# Tier 5: defaults for required fields with no source
+defaults:
+  - {class: Biospecimen, field: HTAN_BIOSPECIMEN_ID, default: null, required: true}
+  - {class: Biospecimen, field: HTAN_PARTICIPANT_ID, default: null, required: true}

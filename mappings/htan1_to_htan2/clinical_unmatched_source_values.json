@@ -1,0 +1,261 @@
+[
+  {
+    "field": "Diagnosis/AJCC Staging System Edition",
+    "target_field": "Diagnosis/AJCC_STAGING_SYSTEM_EDITION",
+    "values": [
+      "unknown",
+      "Not Reported"
+    ]
+  },
+  {
+    "field": "Follow Up/ECOG Performance Status",
+    "target_field": "FollowUp/ECOG_PERFORMANCE_STATUS",
+    "values": [
+      "\"0.0\"",
+      "\"1.0\"",
+      "\"2.0\"",
+      "\"3.0\"",
+      "\"4.0\"",
+      "\"5.0\"",
+      "unknown",
+      "Not Reported"
+    ]
+  },
+  {
+    "field": "Demographics/Race",
+    "target_field": "Demographics/RACE",
+    "values": [
+      "other"
+    ]
+  },
+  {
+    "field": "Diagnosis/Classification of Tumor",
+    "target_field": "Diagnosis/TUMOR_CLASSIFICATION_CATEGORY",
+    "values": [
+      "Metastasis",
+      "Recurrence",
+      "Other",
+      "Not Allowed To Collect"
+    ]
+  },
+  {
+    "field": "Demographics/Cause of Death",
+    "target_field": "VitalStatus/CAUSE_OF_DEATH",
+    "values": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "field": "Demographics/Cause of Death Source",
+    "target_field": "VitalStatus/CAUSE_OF_DEATH_SOURCE",
+    "values": [
+      "Obituary",
+      "unknown",
+      "Not Reported"
+    ]
+  },
+  {
+    "field": "Molecular Test/Clinical Biospecimen Type",
+    "target_field": "MolecularTest/CLINICAL_BIOSPECIMEN_TYPE",
+    "values": [
+      "Buccal Mucosa",
+      "Buffy Coat",
+      "Connective Tissue",
+      "Embryonic Fluid",
+      "Embryonic Tissue",
+      "Feces",
+      "Granulocyte",
+      "Muscle Tissue",
+      "Nerve Tissue",
+      "Peritoneal Fluid",
+      "Plasma",
+      "Pleural Fluid",
+      "Serum",
+      "Skin",
+      "Soft Tissue",
+      "Tissue NOS",
+      "Uninvolved Tissue NOS",
+      "unknown",
+      "Not Reported"
+    ]
+  },
+  {
+    "field": "Follow Up/Evidence of Recurrence Type",
+    "target_field": "FollowUp/EVIDENCE_OF_RECURRENCE_TYPE",
+    "values": [
+      "Convincing Image Source"
+    ]
+  },
+  {
+    "field": "Therapy/Initial Disease Status",
+    "target_field": "Therapy/INITIAL_DISEASE_STATUS",
+    "values": [
+      "Initial Diagnosis",
+      "Progressive Disease",
+      "Recurrent Disease"
+    ]
+  },
+  {
+    "field": "Diagnosis/Last Known Disease Status",
+    "target_field": "Diagnosis/LAST_KNOWN_DISEASE_STATUS",
+    "values": [
+      "Distant met recurrence/progression",
+      "Loco-regional recurrence/progression"
+    ]
+  },
+  {
+    "field": "Diagnosis/Metastasis at Diagnosis",
+    "target_field": "Diagnosis/METASTASIS_AT_DIAGNOSIS",
+    "values": [
+      "Distant Metastasis",
+      "Metastasis NOS",
+      "No Metastasis",
+      "Regional Metastasis",
+      "Not Reported"
+    ]
+  },
+  {
+    "field": "Diagnosis/Method of Diagnosis",
+    "target_field": "Diagnosis/METHOD_OF_DIAGNOSIS",
+    "values": [
+      "Blood Draw",
+      "Cytology",
+      "Other"
+    ]
+  },
+  {
+    "field": "Molecular Test/Molecular Analysis Method",
+    "target_field": "MolecularTest/MOLECULAR_ANALYSIS_METHOD",
+    "values": [
+      "Not Applicable"
+    ]
+  },
+  {
+    "field": "Molecular Test/Molecular Consequence",
+    "target_field": "MolecularTest/MOLECULAR_CONSEQUENCE",
+    "values": [
+      "3 Prime UTR Variant",
+      "5 Prime UTR Variant",
+      "Coding Sequence Variant",
+      "Downstream Gene Variant",
+      "Feature Elongation",
+      "Feature Truncation",
+      "Incomplete Terminal Codon Variant",
+      "Inframe Deletion",
+      "Inframe Insertion",
+      "Intergenic Variant",
+      "Intron Variant",
+      "Mature miRNA Variant",
+      "NMD Transcript Variant",
+      "Non-coding Transcript Exon Variant",
+      "Non-coding Transcript Variant",
+      "Protein Altering Variant",
+      "Regulatory Region Ablation",
+      "Regulatory Region Amplification",
+      "Regulatory Region Variant",
+      "Splice Region Variant",
+      "Stop Retained Variant",
+      "TF Binding Site Variant",
+      "TFBS Ablation",
+      "TFBS Amplification",
+      "Transcript Ablation",
+      "Transcript Amplification",
+      "Upstream Gene Variant"
+    ]
+  },
+  {
+    "field": "Exposure/Tobacco Smoking Status",
+    "target_field": "Exposure/SMOKING_HISTORY",
+    "values": [
+      "Current Reformed Smoker for > 15 yrs",
+      "Current Reformed Smoker for < or = 15 yrs",
+      "Current Reformed Smoker",
+      "Duration Not Specified",
+      "Smoking history not documented"
+    ]
+  },
+  {
+    "field": "Therapy/Treatment Intent Type",
+    "target_field": "Therapy/TREATMENT_INTENT_TYPE",
+    "values": [
+      "Cancer Control",
+      "Cure",
+      "Not Reported"
+    ]
+  },
+  {
+    "field": "Therapy/Treatment Type",
+    "target_field": "Therapy/TREATMENT_TYPE",
+    "values": [
+      "Ablation Cryo",
+      "Ablation Ethanol Injection",
+      "Ablation Microwave",
+      "Ablation NOS",
+      "Ablation Radiofrequency",
+      "Ablation Radiosurgical",
+      "Ancillary Treatment",
+      "Antiseizure Treatment",
+      "Bisphosphonate Therapy",
+      "Blinded Study Treatment unknown",
+      "Brachytherapy Low Dose",
+      "Brachytherapy NOS",
+      "Chemoembolization",
+      "Chemoprotectant",
+      "Cryoablation",
+      "Embolization",
+      "Ethanol Injection Ablation",
+      "Internal Radiation",
+      "Isolated Limb Perfusion (ILP)",
+      "Pharmaceutical Therapy NOS",
+      "Pleurodesis",
+      "Radiation 2D Conventional",
+      "Radiation 3D Conformal",
+      "Radiation Combination",
+      "Radiation Cyberknife",
+      "Radiation External Beam",
+      "Radiation Implants",
+      "Radiation Intensity-Modulated Radiotherapy",
+      "Radiation Internal",
+      "Radiation Proton Beam",
+      "Radiation Radioisotope",
+      "Radiation Stereotactic/Gamma Knife/SRS",
+      "Radiation Systemic",
+      "Radiation Therapy NOS",
+      "Radioactive Iodine Therapy",
+      "Radioembolization",
+      "Radiosensitizing Agent",
+      "Stem Cell Treatment",
+      "Stem Cell Transplantation Double Autologous",
+      "Stem Cell Transplantation Allogeneic",
+      "Stem Cell Transplantation Non-Myeloablative",
+      "Stem Cell Transplantation Syngenic",
+      "Stem Cell Transplantation Haploidentical",
+      "Stem Cell Transplantation NOS",
+      "Steroid Therapy",
+      "Surgery"
+    ]
+  },
+  {
+    "field": "Diagnosis/Tumor Grade",
+    "target_field": "Diagnosis/TUMOR_GRADE",
+    "values": [
+      "High Grade",
+      "Intermediate Grade",
+      "Low Grade"
+    ]
+  },
+  {
+    "field": "Molecular Test/Variant Type",
+    "target_field": "MolecularTest/VARIANT_TYPE",
+    "values": [
+      "Chrimerism"
+    ]
+  },
+  {
+    "field": "Demographics/Gender",
+    "target_field": "Demographics/GENDER_IDENTITY",
+    "values": [
+      "unspecified"
+    ]
+  }
+]

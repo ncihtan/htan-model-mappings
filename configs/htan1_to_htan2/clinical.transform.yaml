@@ -1,0 +1,100 @@
+source_model: "ncihtan/data-models@v25.2.1"
+target_model: "ncihtan/htan2-data-model@v1.3.0"
+domain: clinical
+
+# Tier 1 & 2: auto-derived from field-level and value-level SSSOM
+field_mappings: "mappings/htan1_to_htan2/clinical_fields.sssom.tsv"
+value_mappings: "mappings/htan1_to_htan2/clinical_values.sssom.tsv"
+min_confidence: 0.9  # only auto-apply mappings above this threshold
+
+# Tier 3: explicit conversion rules
+conversions:
+  - source: {class: Diagnosis, field: "Age at Diagnosis"}
+    target: {class: Diagnosis, field: AGE_IN_DAYS_AT_DIAGNOSIS}
+    type: age_days_auto
+    years_threshold: 200  # values > 200 are assumed to already be in days
+    multiplier: 365.25
+
+  - source: {class: Diagnosis, field: "Days to Diagnosis"}
+    target: {class: Diagnosis, field: AGE_IN_DAYS_AT_DIAGNOSIS}
+    type: days_from_index_to_age
+    birth_reference: {class: Demographics, field: "Days to Birth"}
+
+  - source: {class: Diagnosis, field: "Tissue or Organ of Origin"}
+    target: {class: Diagnosis, field: TISSUE_OR_ORGAN_OF_ORIGIN_UBERON_CODE}
+    type: text_to_ontology
+    lookup: lookups/uberon_labels_to_codes.json
+
+  - source: {class: Diagnosis, field: "Primary Diagnosis"}
+    target: {class: Diagnosis, field: PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID}
+    type: text_to_ontology
+    lookup: lookups/ncit_diagnosis_to_codes.json
+
+  - source: {class: Diagnosis, field: "Days to Last Known Disease Status"}
+    target: {class: Diagnosis, field: AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS}
+    type: days_from_index_to_age
+    birth_reference: {class: Demographics, field: "Days to Birth"}
+
+  - source: {class: Follow Up, field: "Days to Follow Up"}
+    target: {class: FollowUp, field: AGE_IN_DAYS_AT_FOLLOWUP}
+    type: days_from_index_to_age
+    birth_reference: {class: Demographics, field: "Days to Birth"}
+
+  - source: {class: Follow Up, field: "Days to Progression"}
+    target: {class: FollowUp, field: AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE}
+    type: days_from_index_to_age
+    birth_reference: {class: Demographics, field: "Days to Birth"}
+
+  - source: {class: Therapy, field: "Days to Treatment Start"}
+    target: {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_START}
+    type: days_from_index_to_age
+    birth_reference: {class: Demographics, field: "Days to Birth"}
+
+  - source: {class: Therapy, field: "Days to Treatment End"}
+    target: {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_END}
+    type: days_from_index_to_age
+    birth_reference: {class: Demographics, field: "Days to Birth"}
+
+  - source: {class: Follow Up, field: "Progression or Recurrence Anatomic Site"}
+    target: {class: FollowUp, field: PROGRESSION_OR_RECURRENCE_ANATOMIC_SITE_UBERON_CODE}
+    type: text_to_ontology
+    lookup: lookups/uberon_labels_to_codes.json
+
+  - source: {class: Therapy, field: "Treatment Anatomic Site"}
+    target: {class: Therapy, field: THERAPY_ANATOMIC_SITE_UBERON_CODE}
+    type: text_to_ontology
+    lookup: lookups/uberon_labels_to_codes.json
+
+# Tier 4: structural transforms
+structural:
+  - type: field_split
+    source: {class: Demographics, field: Gender}
+    targets:
+      - {class: Demographics, field: GENDER_IDENTITY}
+      - {class: Demographics, field: SEX}
+
+  - type: class_relocation
+    source: {class: Diagnosis, field: "Progression or Recurrence"}
+    target: {class: FollowUp, field: PROGRESSION_OR_RECURRENCE}
+
+  - type: class_relocation
+    source: {class: Diagnosis, field: "Progression or Recurrence Type"}
+    target: {class: FollowUp, field: PROGRESSION_OR_RECURRENCE_TYPE}
+
+  - type: class_relocation
+    source: {class: Demographics, field: "Vital Status"}
+    target: {class: VitalStatus, field: VITAL_STATUS}
+
+  - type: class_relocation
+    source: {class: Demographics, field: "Cause of Death"}
+    target: {class: VitalStatus, field: CAUSE_OF_DEATH}
+
+  - type: class_relocation
+    source: {class: Demographics, field: "Cause of Death Source"}
+    target: {class: VitalStatus, field: CAUSE_OF_DEATH_SOURCE}
+
+# Tier 5: defaults for required fields with no source
+defaults:
+  - {class: ClinicalRecordAttributes, field: HTAN_PARTICIPANT_ID, default: null, required: true}
+  - {class: Diagnosis, field: PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID, default: null, required: true}
+  - {class: MolecularTest, field: TIMEPOINT_LABEL, default: "Baseline", required: false}
