@@ -104,10 +104,32 @@ structural:
 # Value corrections: applied after all tiers to fix enum mismatches
 # These handle values from relocated fields and fields not covered by value SSSOM
 value_corrections:
-  # Demographics — use target field names
+  # Demographics
   Demographics/RACE:
     "Other": "Unknown"
     "other": "Unknown"
+  # Diagnosis enum fixes
+  Diagnosis/METHOD_OF_DIAGNOSIS:
+    "other": "Unknown"
+    "Other": "Unknown"
+  Diagnosis/LAST_KNOWN_DISEASE_STATUS:
+    "Dead": "Unknown"
+    "Surveillance": "Tumor Free"
+    "unknown tumor status": "Unknown"
+  Diagnosis/METASTASIS_AT_DIAGNOSIS:
+    "Not Reported": "Unknown"
+  # Clear text sentinels from ontology code fields — leave empty rather than invalid
+  Diagnosis/PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID:
+    "unknown": ""
+    "Not Reported": ""
+  Diagnosis/TISSUE_OR_ORGAN_OF_ORIGIN_UBERON_CODE:
+    "unknown": ""
+    "Not Reported": ""
+    "unknown primary site": ""
+    "UBERON:8480060": "UBERON:0001130"  # paraspinal region → vertebral column (parent in enum)
+  # AJCC edition: "Not Reported" not in enum (only 1st-8th), clear it
+  Diagnosis/AJCC_STAGING_SYSTEM_EDITION:
+    "Not Reported": ""
   # VitalStatus (relocated from Demographics)
   VitalStatus/VITAL_STATUS:
     "Not Reported": "Not reported"
@@ -150,13 +172,23 @@ value_corrections:
     "4.0": "4"
     "5.0": "5"
 
+# Text sentinels in integer fields → convert to -1
+# HTAN1 data uses "Not Applicable", "unknown", "Not Reported", etc. in integer fields
+# HTAN2 spec says "Use -1 if this data point is not available"
+integer_sentinels:
+  - AGE_IN_DAYS_AT_DIAGNOSIS
+  - AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS
+  - AGE_IN_DAYS_AT_FOLLOWUP
+  - AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE
+  - AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS
+  - AGE_IN_DAYS_AT_DEATH
+
 # Tier 5: defaults for required fields with no value
-# Use "Not Reported" where HTAN2 enum allows it, to satisfy required constraints
 defaults:
   # Diagnosis required integer fields (-1 = not available, per caDSR spec)
   - {class: Diagnosis, field: AGE_IN_DAYS_AT_DIAGNOSIS, default: "-1", required: true}
   - {class: Diagnosis, field: AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS, default: "-1", required: true}
-  # Diagnosis required enum fields
+  # Diagnosis required enum fields — use correct sentinel per enum
   - {class: Diagnosis, field: CLINICAL_M_STAGE, default: "Not Reported", required: true}
   - {class: Diagnosis, field: CLINICAL_N_STAGE, default: "Not Reported", required: true}
   - {class: Diagnosis, field: CLINICAL_T_STAGE, default: "Not Reported", required: true}
@@ -164,14 +196,15 @@ defaults:
   - {class: Diagnosis, field: METHOD_OF_DIAGNOSIS, default: "Not Reported", required: true}
   - {class: Diagnosis, field: TUMOR_CLASSIFICATION_CATEGORY, default: "Not Reported", required: true}
   - {class: Diagnosis, field: TUMOR_GRADE, default: "Not Reported", required: true}
-  - {class: Diagnosis, field: AJCC_STAGING_SYSTEM_EDITION, default: "Not Reported", required: true}
   - {class: Diagnosis, field: LAST_KNOWN_DISEASE_STATUS, default: "Not Reported", required: true}
+  # AJCC_STAGING_SYSTEM_EDITION has no sentinel — only edition numbers, leave empty
+  # PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID has no sentinel — only NCIt codes, leave empty
   # VitalStatus
   - {class: VitalStatus, field: VITAL_STATUS, default: "Not reported", required: true}
   - {class: VitalStatus, field: AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS, default: "-1", required: true}
-  # FollowUp required fields
+  - {class: VitalStatus, field: CAUSE_OF_DEATH_SOURCE, default: "Other, specify", required: false}
+  # FollowUp
   - {class: FollowUp, field: AGE_IN_DAYS_AT_FOLLOWUP, default: "-1", required: true}
   - {class: FollowUp, field: DISEASE_RESPONSE, default: "Not Reported", required: true}
-  - {class: FollowUp, field: ECOG_PERFORMANCE_STATUS, default: "", required: false}
   - {class: FollowUp, field: MENOPAUSE_STATUS, default: "Not Reported", required: true}
   - {class: FollowUp, field: PROGRESSION_OR_RECURRENCE, default: "Not Reported", required: true}

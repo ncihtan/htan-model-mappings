@@ -73,6 +73,9 @@ class MigrationEngine:
         # Load value corrections (final-pass enum fixes)
         self.value_corrections = self.config.get("value_corrections", {})
 
+        # Integer sentinel fields: text sentinels → -1
+        self.integer_sentinel_fields = set(self.config.get("integer_sentinels", []))
+
         # Lookup table cache
         self._lookup_cache: dict[str, dict] = {}
 
@@ -550,6 +553,21 @@ class MigrationEngine:
             relocated_key = f"{cls}/{field}"
             if relocated_key in relocated and relocated[relocated_key] in corrections:
                 relocated[relocated_key] = corrections[relocated[relocated_key]]
+
+        # Convert text sentinels in integer fields to -1
+        for field in self.integer_sentinel_fields:
+            for target in [result, relocated]:
+                for key in list(target.keys()):
+                    actual_field = key.split("/")[-1] if "/" in key else key
+                    if actual_field == field:
+                        val = target[key]
+                        if val and isinstance(val, str):
+                            val_stripped = val.strip()
+                            try:
+                                float(val_stripped)
+                            except (ValueError, TypeError):
+                                # Text value in integer field → -1
+                                target[key] = "-1"
 
         # Store relocated fields in a special key for the caller to handle
         if relocated:
