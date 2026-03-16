@@ -9,3 +9,5 @@ build/
 
 # Temp files from mapping runs
 tmp/
+# Migration output data (generated, not committed)
+output/
