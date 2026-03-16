@@ -298,6 +298,15 @@ class MigrationEngine:
                 writer.writerow(row)
         report["output_files"] = {target_class_name: str(main_path)}
 
+        # Apply defaults to relocated rows
+        for target_class, rows in relocated_rows.items():
+            for default in self.defaults:
+                if default.get("class") == target_class:
+                    col = default["field"]
+                    for row in rows:
+                        if col not in row or row[col] == "" or row[col] is None:
+                            row[col] = default.get("default", "")
+
         # Write relocated class TSVs
         for target_class, rows in relocated_rows.items():
             all_relocated_cols = {k for r in rows for k in r.keys()}

@@ -150,8 +150,28 @@ value_corrections:
     "4.0": "4"
     "5.0": "5"
 
-# Tier 5: defaults for required fields with no source
+# Tier 5: defaults for required fields with no value
+# Use "Not Reported" where HTAN2 enum allows it, to satisfy required constraints
 defaults:
-  - {class: ClinicalRecordAttributes, field: HTAN_PARTICIPANT_ID, default: null, required: true}
-  - {class: Diagnosis, field: PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID, default: null, required: true}
-  - {class: MolecularTest, field: TIMEPOINT_LABEL, default: "Baseline", required: false}
+  # Diagnosis required integer fields (-1 = not available, per caDSR spec)
+  - {class: Diagnosis, field: AGE_IN_DAYS_AT_DIAGNOSIS, default: "-1", required: true}
+  - {class: Diagnosis, field: AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS, default: "-1", required: true}
+  # Diagnosis required enum fields
+  - {class: Diagnosis, field: CLINICAL_M_STAGE, default: "Not Reported", required: true}
+  - {class: Diagnosis, field: CLINICAL_N_STAGE, default: "Not Reported", required: true}
+  - {class: Diagnosis, field: CLINICAL_T_STAGE, default: "Not Reported", required: true}
+  - {class: Diagnosis, field: METASTASIS_AT_DIAGNOSIS, default: "Unknown", required: true}
+  - {class: Diagnosis, field: METHOD_OF_DIAGNOSIS, default: "Not Reported", required: true}
+  - {class: Diagnosis, field: TUMOR_CLASSIFICATION_CATEGORY, default: "Not Reported", required: true}
+  - {class: Diagnosis, field: TUMOR_GRADE, default: "Not Reported", required: true}
+  - {class: Diagnosis, field: AJCC_STAGING_SYSTEM_EDITION, default: "Not Reported", required: true}
+  - {class: Diagnosis, field: LAST_KNOWN_DISEASE_STATUS, default: "Not Reported", required: true}
+  # VitalStatus
+  - {class: VitalStatus, field: VITAL_STATUS, default: "Not reported", required: true}
+  - {class: VitalStatus, field: AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS, default: "-1", required: true}
+  # FollowUp required fields
+  - {class: FollowUp, field: AGE_IN_DAYS_AT_FOLLOWUP, default: "-1", required: true}
+  - {class: FollowUp, field: DISEASE_RESPONSE, default: "Not Reported", required: true}
+  - {class: FollowUp, field: ECOG_PERFORMANCE_STATUS, default: "", required: false}
+  - {class: FollowUp, field: MENOPAUSE_STATUS, default: "Not Reported", required: true}
+  - {class: FollowUp, field: PROGRESSION_OR_RECURRENCE, default: "Not Reported", required: true}
