@@ -171,6 +171,49 @@ value_corrections:
     "3.0": "3"
     "4.0": "4"
     "5.0": "5"
+  # Exposure
+  Exposure/ALCOHOL_HISTORY_INDICATOR:
+    "yes": "Yes"
+    "no": "No"
+    "Yes ": "Yes"
+  # Therapy
+  Therapy/TREATMENT_INTENT_TYPE:
+    "Not Reported": "Unknown"
+  Therapy/REGIMEN_OR_LINE_OF_THERAPY:
+    "1.0": "1"
+    "2.0": "2"
+    "3.0": "3"
+    "4.0": "4"
+    "5.0": "5"
+    "6.0": "6"
+    "7.0": "7"
+    "First Line": "1"
+    "Second Line": "2"
+    "Third Line": "3"
+  Therapy/RESPONSE:
+    "unknown": "Unknown"
+    "not reported": "Not Reported"
+    "Treatment Ongoing": "Not Evaluable"
+  Therapy/TREATMENT_INTENT_TYPE:
+    "Not Reported": "Unknown"
+    "Cancer Control": "Palliative"
+  Therapy/THERAPY_ANATOMIC_SITE_UBERON_CODE:
+    "unknown": ""
+    "Not Reported": ""
+    "Bone NOS": ""
+  # MolecularTest — CLINICAL_BIOSPECIMEN_TYPE enum is all-caps
+  MolecularTest/CLINICAL_BIOSPECIMEN_TYPE:
+    "Soft Tissue": ""
+    "Blood": "BLOOD"
+    "Bone Marrow": "BONE MARROW"
+    "Saliva": "SALIVA"
+    "Cerebrospinal Fluid": "CEREBROSPINAL FLUID"
+    "Plasma": "PLASMA"
+    "Serum": "SERUM"
+    "Stool": "STOOL"
+    "Urine": "URINE"
+  MolecularTest/MOLECULAR_CONSEQUENCE:
+    "Splice Region Variant": ""
 
 # Text sentinels in integer fields → convert to -1
 # HTAN1 data uses "Not Applicable", "unknown", "Not Reported", etc. in integer fields
@@ -182,6 +225,12 @@ integer_sentinels:
   - AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE
   - AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS
   - AGE_IN_DAYS_AT_DEATH
+  - AGE_IN_DAYS_AT_MOLECULAR_TEST_START
+  - AGE_IN_DAYS_AT_TREATMENT_START
+  - AGE_IN_DAYS_AT_TREATMENT_END
+  - PACK_YEARS_SMOKED
+  - YEARS_SMOKED
+  - COPY_NUMBER
 
 # Tier 5: defaults for required fields with no value
 defaults:
@@ -202,12 +251,24 @@ defaults:
   # VitalStatus
   - {class: VitalStatus, field: VITAL_STATUS, default: "Not reported", required: true}
   - {class: VitalStatus, field: AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS, default: "-1", required: true}
-  - {class: VitalStatus, field: AGE_IN_DAYS_AT_DEATH, default: "-1", required: false}
   - {class: VitalStatus, field: CAUSE_OF_DEATH_SOURCE, default: "Other, specify", required: false}
   # FollowUp
   - {class: FollowUp, field: AGE_IN_DAYS_AT_FOLLOWUP, default: "-1", required: true}
-  - {class: FollowUp, field: AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE, default: "-1", required: false}
   - {class: FollowUp, field: DISEASE_RESPONSE, default: "Not Reported", required: true}
   - {class: FollowUp, field: MENOPAUSE_STATUS, default: "Not Reported", required: true}
   - {class: FollowUp, field: PROGRESSION_OR_RECURRENCE, default: "Not Reported", required: true}
-  - {class: FollowUp, field: PROGRESSION_OR_RECURRENCE_TYPE, default: "Not Reported", required: false}
+  # Exposure
+  - {class: Exposure, field: ENVIRONMENTAL_EXPOSURE, default: "Not Reported", required: true}
+  - {class: Exposure, field: ALCOHOL_HISTORY_INDICATOR, default: "Not applicable", required: true}
+  - {class: Exposure, field: SMOKING_HISTORY, default: "Not reported", required: true}
+  # FamilyHistory
+  - {class: FamilyHistory, field: FAMILY_MEMBER_CANCER_HISTORY, default: "Not Reported", required: true}
+  # MolecularTest
+  - {class: MolecularTest, field: AGE_IN_DAYS_AT_MOLECULAR_TEST_START, default: "-1", required: true}
+  - {class: MolecularTest, field: MOLECULAR_ANALYSIS_RESULT, default: "Not Reported", required: true}
+  # Therapy
+  - {class: Therapy, field: PHARMACOTHERAPY_TYPE, default: "Not Applicable", required: true}
+  - {class: Therapy, field: INITIAL_DISEASE_STATUS, default: "Not Reported", required: true}
+  - {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_END, default: "-1", required: true}
+  - {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_START, default: "-1", required: true}
+  - {class: Therapy, field: TREATMENT_INTENT_TYPE, default: "Unknown", required: true}
