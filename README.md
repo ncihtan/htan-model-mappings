@@ -1,8 +1,15 @@
 # htan-model-mappings
 
-The Human Tumor Atlas Network (HTAN) is transitioning from its Phase 1 data model — a flat Schematic CSV with 59 classes, free-text fields, and cancer-type-specific tiers — to a Phase 2 model built on LinkML with ontology-coded attributes, age-in-days temporal fields, and a hierarchical class structure. This repository produces machine-readable, field-level mappings between the two models using the [SSSOM](https://mapping-commons.github.io/sssom/) standard, enabling data migration tooling, gap analysis, and provenance tracking for the transition.
+The Human Tumor Atlas Network (HTAN) is transitioning from its Phase 1 data model — a flat Schematic CSV with 59 classes, free-text fields, and cancer-type-specific tiers — to a Phase 2 model built on LinkML with ontology-coded attributes, age-in-days temporal fields, and a hierarchical class structure.
 
-The current mapping set covers **309 matched field pairs** across clinical, biospecimen, and assay domains, along with an inventory of **793 Phase 1 fields** with no Phase 2 equivalent and **88 new Phase 2 fields** with no Phase 1 predecessor. See [`mappings/htan1_to_htan2/MAPPING.md`](mappings/htan1_to_htan2/MAPPING.md) for detailed results.
+This repository provides:
+
+1. **Field-level SSSOM mappings** between the two models (309 matched field pairs)
+2. **Value-level SSSOM mappings** for enum translation (356 clinical value matches)
+3. **A config-driven migration engine** that transforms HTAN1 tabular data to HTAN2-compatible format
+4. **OLS-verified ontology lookup tables** for UBERON tissues and NCIt diagnoses
+
+The migration has been validated against HTAN2 v1.3.0 JSON Schemas at **100% compliance** across 10,077 rows of real HTAN1 clinical data from BigQuery. See [`mappings/htan1_to_htan2/MIGRATION_REPORT.md`](mappings/htan1_to_htan2/MIGRATION_REPORT.md) for detailed results.
 
 ## Quick Start
 
@@ -10,77 +17,122 @@ The current mapping set covers **309 matched field pairs** across clinical, bios
 pip install -e ".[dev]"
 ```
 
+### Migrate HTAN1 Data
+
+```bash
+# Pull data from BigQuery (requires gcloud auth)
+uv run htan query bq sql "SELECT * FROM \`isb-cgc-bq.HTAN.clinical_tier1_demographics_current\` LIMIT 3000" \
+  --format csv 2>/dev/null | python3 -c "import csv,sys; [print('\t'.join(r)) for r in csv.reader(sys.stdin)]" \
+  > /tmp/htan1_demographics.tsv
+
+# Run migration
+uv run python scripts/migrate.py \
+  --input /tmp/htan1_demographics.tsv \
+  --config configs/htan1_to_htan2/clinical.transform.yaml \
+  --source-class Demographics \
+  --output output/htan1_to_htan2/ \
+  --normalize-columns
+
+# Validate against HTAN2 JSON Schema
+uv run python scripts/validate_transformed.py \
+  --input-dir output/htan1_to_htan2/ \
+  --schema-dir /path/to/htan2_json_schemas/ \
+  --ignore-patterns
+```
+
 ### Generate Mappings (via Claude Code skill)
 
 ```
-/map-models --source ncihtan/data-models@v25.2.1 --target ncihtan/htan2-data-model@v1.3.0 --domain clinical
+/map-models --source ncihtan/data-models@v25.2.1 --target ncihtan/htan2-data-model@v1.3.0
 ```
 
 ### Validate Existing Mappings
 
 ```bash
-python scripts/validate_mappings.py mappings/htan1_to_htan2/
+uv run python scripts/validate_mappings.py mappings/htan1_to_htan2/
 ```
 
 ## Structure
 
 ```
-mappings/           SSSOM TSV files organized by mapping pair
-scripts/            Python utilities (normalize, match, validate, generate)
-.claude/skills/     Claude Code skill definitions
+mappings/                          SSSOM TSV files (field-level + value-level)
+  htan1_to_htan2/
+    clinical_fields.sssom.tsv      68 field mappings
+    clinical_values.sssom.tsv      356 value mappings (deterministic + semantic)
+    biospecimen_fields.sssom.tsv   35 field mappings
+    assay_fields.sssom.tsv         206 field mappings
+    MAPPING.md                     Field mapping methodology
+    MIGRATION_REPORT.md            Migration results and validation
+
+configs/                           Transform configs (YAML)
+  htan1_to_htan2/
+    clinical.transform.yaml        Conversions, structural transforms, defaults
+    biospecimen.transform.yaml
+    assay.transform.yaml
+
+lookups/                           Ontology lookup tables (JSON)
+  uberon_labels_to_codes.json      22,603 entries (HTAN2 enums + 73 OLS-verified)
+  ncit_diagnosis_to_codes.json     20,195 entries (HTAN2 enums + 59 OLS-verified)
+
+scripts/                           Python utilities
+  migrate.py                       Migration engine (5-tier pipeline)
+  value_match.py                   Deterministic value matching
+  semantic_value_match.py          LLM-assisted value matching
+  ols_lookup.py                    EBI OLS4 API for ontology resolution
+  build_lookup_tables.py           Extract lookups from HTAN2 enum YAMLs
+  validate_transformed.py          JSON Schema / LinkML validation
+  normalize_model.py               Model format normalization
+  deterministic_match.py           Field matching (caDSR + name)
+  generate_sssom_tsv.py            SSSOM TSV generation
+  validate_mappings.py             SSSOM file validation
+
+tests/                             pytest test suite (36 tests)
+
+.claude/skills/                    Claude Code skill definitions
+  map-models/                      /map-models — generate SSSOM mappings
+  migrate-data/                    /migrate-data — orchestrate migration
 ```
 
-## Methods
+## Migration Pipeline
 
-### Overview
+The migration engine (`scripts/migrate.py`) applies five tiers of transformation, driven by YAML config files:
 
-Mappings are generated by a multi-stage pipeline that combines deterministic identifier matching with LLM-assisted semantic matching and structured quality review. The pipeline is implemented as a Claude Code skill (`/map-models`) that orchestrates parallel agents and Python scripts.
+| Tier | Transform | Example |
+|------|-----------|---------|
+| 1 | **Field renaming** | `Ethnicity` → `ETHNIC_GROUP` (from field SSSOM) |
+| 2 | **Value remapping** | `not hispanic or latino` → `Not Hispanic or Latino` (from value SSSOM) |
+| 3 | **Conversions** | `Colon NOS` → `UBERON:0001155` (text-to-ontology via OLS-verified lookup) |
+| 4 | **Structural** | `Gender` split → `GENDER_IDENTITY` + `SEX`; `Vital Status` relocated Demographics → VitalStatus |
+| 5 | **Defaults** | Empty required fields → `Not Reported` / `Unknown` / `-1` (per HTAN2 sentinel conventions) |
 
-### Stage 1: Model Extraction and Normalization
+Additional post-processing: value corrections for enum mismatches, integer sentinel conversion for text values in numeric fields, ICD-O NOS suffix stripping.
 
-Each source model is fetched from GitHub at a pinned tag and parsed into a common JSON representation using `scripts/normalize_model.py`. The normalizer auto-detects the model format:
+## Mapping Methods
 
-| Format | Example | Key Signals |
-|--------|---------|-------------|
-| Schematic CSV | HTAN Phase 1 (`HTAN.model.csv`) | `*.model.csv` with Attribute/Parent/Source columns |
-| LinkML | HTAN Phase 2 (`modules/*/domains/*.yaml`) | YAML with `classes:`/`slots:` keys |
-| JSON Schema | GDC/TCGA | JSON with `properties:`/`$ref` keys |
+Mappings are generated by a multi-stage pipeline combining deterministic matching with LLM-assisted semantic matching:
 
-For LinkML models split across multiple YAML files (one per domain, separate enum definitions), all files are downloaded and merged. Field names are normalized to `lowercase_underscore` form for comparison. caDSR identifiers are extracted from Schematic CSV `Source` URLs and LinkML `slot_uri` or `annotations.caDSR_id` properties.
+1. **Model Extraction** — Fetch from GitHub, normalize to common JSON format
+2. **Deterministic Matching** — caDSR ID match (confidence 1.0) + normalized name match (0.9)
+3. **Semantic Matching** — Parallel Haiku agents evaluate descriptions, enum overlap, naming patterns
+4. **Quality Review** — Sonnet agent checks duplicates, cross-class moves, 1-to-many splits
+5. **SSSOM Generation** — TSV output with YAML metadata headers
 
-### Stage 2: Deterministic Matching
+### Current Results
 
-`scripts/deterministic_match.py` performs two passes over the normalized models:
+| Domain | Matched | Unmatched Source | New in Phase 2 | Avg Confidence |
+|--------|---------|-----------------|-----------------|----------------|
+| Clinical | 68 | 351 | 9 | 0.88 |
+| Biospecimen | 35 | 31 | 2 | 0.88 |
+| Assay | 206 | 411 | 77 | 0.87 |
+| **Total** | **309** | **793** | **88** | **0.87** |
 
-1. **caDSR ID matching.** Fields sharing a common data element identifier from the NCI Cancer Data Standards Registry are paired as `skos:exactMatch` at confidence 1.0. This is the highest-fidelity signal, anchoring 20 mappings across the clinical and biospecimen domains. Assay fields carry no caDSR IDs.
+Value-level: 356 clinical value matches (285 deterministic + 71 LLM-assisted), avg confidence 0.94.
 
-2. **Normalized name matching.** Fields whose lowercased, underscore-separated names are identical are paired as `skos:exactMatch` at confidence 0.9. This captures the bulk of straightforward renames (e.g., `Therapeutic Agents` -> `THERAPEUTIC_AGENTS`) and accounts for 149 of 309 total mappings.
+## Ontology Resolution
 
-### Stage 3: Semantic Matching
+Text-to-ontology conversions use lookup tables built from HTAN2 enum YAML files, verified against the [EBI OLS4 API](https://www.ebi.ac.uk/ols4/):
 
-Remaining unmatched target fields are grouped by domain area and dispatched to parallel LLM agents (Claude Haiku) that evaluate candidate source fields based on:
+- **UBERON** (tissues): 22,603 entries — 73 HTAN1 tissue terms OLS-verified, 100% resolution rate
+- **NCIt** (diagnoses): 20,195 entries — 59 ICD-O morphology terms OLS-verified, 100% resolution rate
 
-- Description similarity and domain context
-- Valid value (enum) overlap
-- Naming patterns across conventions (e.g., `Days to Birth` <-> `AGE_IN_DAYS`)
-- Unit and encoding differences (free text vs. ontology codes, years vs. days)
-
-Each agent returns a structured JSON response specifying the best match, a SKOS predicate, a confidence score, and a rationale. Fields with no reasonable match are explicitly marked as unmatched.
-
-### Stage 4: Quality Review
-
-A review agent (Claude Sonnet) receives the full combined mapping set and checks for:
-
-- **Duplicate target mappings** — multiple source fields claiming the same target
-- **1-to-many splits** — a single source field correctly mapping to multiple targets (e.g., HTAN1 `Gender` -> HTAN2 `GENDER_IDENTITY` + `SEX`), with confidence adjusted to reflect primary vs. secondary mappings
-- **Cross-class relocations** — fields that moved between classes (e.g., `Progression or Recurrence` from Diagnosis to FollowUp), downgraded from `exactMatch` to `closeMatch`
-- **Structural reference mismatches** — container/reference fields operating at different architectural levels
-- **False positives from caDSR errors** — e.g., HTAN1 `Percent Neutrophil Infiltration` carried an incorrect caDSR ID that falsely matched `PERCENT_NORMAL_CELLS`
-
-Modified mappings have their justification updated to `semapv:MappingReview`.
-
-### Stage 5: Output and Validation
-
-Final mappings are written to SSSOM TSV files via `scripts/generate_sssom_tsv.py`, with a YAML metadata header specifying CURIE prefixes, license, and provenance. A second file per domain records unmapped source fields using the `skos:noMappingFound` predicate, with categorized reasons in the comment column.
-
-All output is validated by `scripts/validate_mappings.py`, which checks column completeness, predicate validity, confidence ranges, and (when sssom-py is available) full SSSOM spec compliance.
+The `scripts/ols_lookup.py` utility provides `search`, `resolve`, `crosswalk`, and `verify` commands against the OLS4 API (free, no auth required).
