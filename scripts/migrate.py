@@ -257,7 +257,10 @@ class MigrationEngine:
                 report["rows_succeeded"] += 1
 
         # Apply defaults for all rows
-        target_columns = sorted(all_target_columns)
+        # Put passthrough/ID columns first, then sort the rest
+        id_cols = [v for v in self.passthroughs.values() if v in all_target_columns]
+        rest_cols = sorted(c for c in all_target_columns if c not in id_cols)
+        target_columns = id_cols + rest_cols
         for default in self.defaults:
             if default.get("class") == self._target_class_for(source_class):
                 col = default["field"]
@@ -294,7 +297,10 @@ class MigrationEngine:
 
         # Write relocated class TSVs
         for target_class, rows in relocated_rows.items():
-            relocated_cols = sorted({k for r in rows for k in r.keys()})
+            all_relocated_cols = {k for r in rows for k in r.keys()}
+            relocated_id_cols = [v for v in self.passthroughs.values() if v in all_relocated_cols]
+            relocated_rest = sorted(c for c in all_relocated_cols if c not in relocated_id_cols)
+            relocated_cols = relocated_id_cols + relocated_rest
             relocated_path = output_dir / f"{source_tag}_{target_class}.tsv"
             with open(relocated_path, "w", newline="") as f:
                 writer = csv.DictWriter(f, fieldnames=relocated_cols, delimiter="\t", extrasaction="ignore")
