@@ -202,9 +202,12 @@ defaults:
   # VitalStatus
   - {class: VitalStatus, field: VITAL_STATUS, default: "Not reported", required: true}
   - {class: VitalStatus, field: AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS, default: "-1", required: true}
+  - {class: VitalStatus, field: AGE_IN_DAYS_AT_DEATH, default: "-1", required: false}
   - {class: VitalStatus, field: CAUSE_OF_DEATH_SOURCE, default: "Other, specify", required: false}
   # FollowUp
   - {class: FollowUp, field: AGE_IN_DAYS_AT_FOLLOWUP, default: "-1", required: true}
+  - {class: FollowUp, field: AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE, default: "-1", required: false}
   - {class: FollowUp, field: DISEASE_RESPONSE, default: "Not Reported", required: true}
   - {class: FollowUp, field: MENOPAUSE_STATUS, default: "Not Reported", required: true}
   - {class: FollowUp, field: PROGRESSION_OR_RECURRENCE, default: "Not Reported", required: true}
+  - {class: FollowUp, field: PROGRESSION_OR_RECURRENCE_TYPE, default: "Not Reported", required: false}
