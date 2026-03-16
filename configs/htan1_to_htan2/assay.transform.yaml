@@ -7,6 +7,14 @@ field_mappings: "mappings/htan1_to_htan2/assay_fields.sssom.tsv"
 value_mappings: "mappings/htan1_to_htan2/assay_values.sssom.tsv"
 min_confidence: 0.9  # only auto-apply mappings above this threshold
 
+passthroughs:
+  - source: "HTAN Participant ID"
+    target: "HTAN_PARTICIPANT_ID"
+  - source: "HTAN Biospecimen ID"
+    target: "HTAN_BIOSPECIMEN_ID"
+  - source: "HTAN Data File ID"
+    target: "HTAN_DATA_FILE_ID"
+
 # Tier 3: explicit conversion rules
 conversions: []
 

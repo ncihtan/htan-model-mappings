@@ -61,6 +61,9 @@ class MigrationEngine:
         # Load conversion rules
         self.conversions = self._load_conversions()
 
+        # Load passthrough fields (copied from any source class)
+        self.passthroughs = self._load_passthroughs()
+
         # Load structural transforms
         self.structural = self.config.get("structural", [])
 
@@ -141,6 +144,24 @@ class MigrationEngine:
                 value_map.setdefault(key, {})[source_value] = target_value
 
         return value_map
+
+    def _load_passthroughs(self) -> dict[str, str]:
+        """Load passthrough field mappings from config.
+
+        Passthroughs are fields that appear in every BQ table (like HTAN_Participant_ID)
+        and should always be carried forward regardless of source class.
+
+        Config format:
+            passthroughs:
+              - source: "HTAN Participant ID"
+                target: "HTAN_PARTICIPANT_ID"
+
+        Returns {source_name: target_name}
+        """
+        result = {}
+        for entry in self.config.get("passthroughs", []):
+            result[entry["source"]] = entry["target"]
+        return result
 
     def _load_conversions(self) -> list[dict]:
         """Load conversion rules from config."""
@@ -288,6 +309,18 @@ class MigrationEngine:
 
         return report
 
+    def _find_cross_class_mapping(self, field_name: str) -> dict | None:
+        """Find a field mapping regardless of source class.
+
+        Handles fields inherited from parent classes (e.g., HTAN Participant ID
+        is defined under Patient but appears in Demographics, Diagnosis, etc.).
+        """
+        for key, mapping in self.field_map.items():
+            _, mapped_field = key.split("/", 1) if "/" in key else ("", key)
+            if mapped_field == field_name:
+                return mapping
+        return None
+
     def _target_class_for(self, source_class: str) -> str:
         """Find the target class for a source class from field mappings."""
         for key, mapping in self.field_map.items():
@@ -310,22 +343,34 @@ class MigrationEngine:
         result = {}
         relocated = {}  # Fields that should go to a different output table
 
+        # Tier 0: Passthrough fields (appear in every source table)
+        for source_col, value in row.items():
+            if source_col in self.passthroughs:
+                result[self.passthroughs[source_col]] = value
+
         # Tier 1: Field renaming
         for source_col, value in row.items():
+            if source_col in self.passthroughs:
+                continue  # Already handled
             key = f"{source_class}/{source_col}"
             mapping = self.field_map.get(key)
+            # If not found under this class, check all classes (handles
+            # inherited fields like HTAN_PARTICIPANT_ID from ClinicalRecordAttributes)
+            if not mapping:
+                mapping = self._find_cross_class_mapping(source_col)
             if mapping:
                 target_field = mapping["target_field"]
                 result[target_field] = value
             else:
-                # Keep unmapped fields with a prefix for debugging
                 warnings.append(f"Unmapped field: {source_col}")
 
         # Tier 2: Value remapping
         for source_col, value in row.items():
+            if source_col in self.passthroughs:
+                continue
             key = f"{source_class}/{source_col}"
             value_mappings = self.value_map.get(key, {})
-            mapping = self.field_map.get(key)
+            mapping = self.field_map.get(key) or self._find_cross_class_mapping(source_col)
             if mapping and value in value_mappings:
                 target_field = mapping["target_field"]
                 result[target_field] = value_mappings[value]

@@ -7,6 +7,13 @@ field_mappings: "mappings/htan1_to_htan2/clinical_fields.sssom.tsv"
 value_mappings: "mappings/htan1_to_htan2/clinical_values.sssom.tsv"
 min_confidence: 0.9  # only auto-apply mappings above this threshold
 
+# Passthrough fields: appear in every BQ table, always carried forward
+# These are inherited from ClinicalRecordAttributes in the LinkML schema
+# but appear as columns in every BQ clinical table
+passthroughs:
+  - source: "HTAN Participant ID"
+    target: "HTAN_PARTICIPANT_ID"
+
 # Tier 3: explicit conversion rules
 conversions:
   - source: {class: Diagnosis, field: "Age at Diagnosis"}
