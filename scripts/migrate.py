@@ -33,6 +33,17 @@ from validate_mappings import parse_sssom_tsv_basic
 from value_match import extract_class_field
 
 
+def normalize_column_name(col: str | None) -> str:
+    """Normalize a BQ-style column name to model-style.
+
+    BQ uses underscores (Vital_Status), model uses spaces (Vital Status).
+    Also handles HTAN_Participant_ID → HTAN Participant ID.
+    """
+    if col is None:
+        return ""
+    return col.replace("_", " ")
+
+
 class MigrationEngine:
     """Config-driven transformer for HTAN1 → HTAN2 data migration."""
 
@@ -156,6 +167,7 @@ class MigrationEngine:
         source_class: str,
         output_path: str,
         context_rows: dict[str, list[dict]] | None = None,
+        normalize_columns: bool = False,
     ) -> dict:
         """Migrate an entire TSV file.
 
@@ -165,6 +177,8 @@ class MigrationEngine:
             output_path: Path to write output HTAN2 TSV
             context_rows: Optional {class_name: [rows]} for cross-class references
                          (e.g., Demographics rows needed for birth date conversion)
+            normalize_columns: If True, convert BQ-style underscore column names
+                              to model-style space names before processing
 
         Returns:
             Migration report dict
@@ -185,17 +199,35 @@ class MigrationEngine:
             "errors": [],
             "unmapped_values": {},
             "field_coverage": {},
+            "relocated_files": {},
         }
 
         output_rows = []
         all_target_columns = set()
+        relocated_rows: dict[str, list[dict]] = {}  # {target_class: [rows]}
 
         for row in reader:
+            # Normalize BQ column names if requested
+            if normalize_columns:
+                row = {normalize_column_name(k): v for k, v in row.items() if k is not None}
+
             transformed, warnings = self.transform_row(row, source_class, context_rows)
             report["rows_processed"] += 1
             report["warnings"].extend(warnings)
 
             if transformed:
+                # Extract relocated fields into separate output
+                relocated = transformed.pop("__relocated__", None)
+                if relocated and isinstance(relocated, dict):
+                    for target_key, value in relocated.items():
+                        target_class, target_field = target_key.split("/", 1)
+                        relocated_rows.setdefault(target_class, [])
+                        # Find or create row for this target class
+                        if not relocated_rows[target_class] or \
+                                len(relocated_rows[target_class]) < report["rows_processed"]:
+                            relocated_rows[target_class].append({})
+                        relocated_rows[target_class][-1][target_field] = value
+
                 output_rows.append(transformed)
                 all_target_columns.update(transformed.keys())
                 report["rows_succeeded"] += 1
@@ -216,7 +248,7 @@ class MigrationEngine:
                                 f"Required field {col} has no value and no default"
                             )
 
-        # Write output TSV
+        # Write main output TSV
         output_file = Path(output_path)
         output_file.parent.mkdir(parents=True, exist_ok=True)
         with open(output_file, "w", newline="") as f:
@@ -225,6 +257,17 @@ class MigrationEngine:
             for row in output_rows:
                 writer.writerow(row)
 
+        # Write relocated class TSVs
+        for target_class, rows in relocated_rows.items():
+            relocated_cols = sorted({k for r in rows for k in r.keys()})
+            relocated_path = output_file.parent / f"{output_file.stem}_{target_class}{output_file.suffix}"
+            with open(relocated_path, "w", newline="") as f:
+                writer = csv.DictWriter(f, fieldnames=relocated_cols, delimiter="\t", extrasaction="ignore")
+                writer.writeheader()
+                for row in rows:
+                    writer.writerow(row)
+            report["relocated_files"][target_class] = str(relocated_path)
+
         # Count transformed values
         report["values_transformed"] = sum(
             1 for row in output_rows for v in row.values() if v
@@ -232,14 +275,15 @@ class MigrationEngine:
 
         # Field coverage
         mapped_fields = set()
-        for col in source_columns:
+        effective_columns = [normalize_column_name(c) for c in source_columns] if normalize_columns else source_columns
+        for col in effective_columns:
             key = f"{source_class}/{col}"
             if key in self.field_map:
                 mapped_fields.add(col)
         report["field_coverage"] = {
-            "source_fields": len(source_columns),
+            "source_fields": len(effective_columns),
             "mapped_fields": len(mapped_fields),
-            "unmapped_fields": [c for c in source_columns if c not in mapped_fields],
+            "unmapped_fields": [c for c in effective_columns if c not in mapped_fields],
         }
 
         return report
@@ -426,6 +470,8 @@ def main():
     parser.add_argument("--source-class", required=True, help="Source class name (e.g., Demographics)")
     parser.add_argument("--output", required=True, help="Output HTAN2 TSV file")
     parser.add_argument("--context", action="append", default=[], help="Context TSV files as class:path pairs")
+    parser.add_argument("--normalize-columns", action="store_true",
+                        help="Normalize BQ-style column names (underscores to spaces)")
     parser.add_argument("--validate", action="store_true", help="Validate output against HTAN2 schema")
     parser.add_argument("--report", help="Path to write JSON migration report")
     args = parser.parse_args()
@@ -440,7 +486,10 @@ def main():
             context_rows[cls_name] = list(reader)
 
     engine = MigrationEngine(args.config)
-    report = engine.migrate_file(args.input, args.source_class, args.output, context_rows)
+    report = engine.migrate_file(
+        args.input, args.source_class, args.output, context_rows,
+        normalize_columns=args.normalize_columns,
+    )
 
     # Print summary
     print(f"Migration complete: {args.source_class}")
@@ -452,6 +501,9 @@ def main():
     print(f"  Field coverage:    {coverage.get('mapped_fields', 0)}/{coverage.get('source_fields', 0)}")
     if coverage.get("unmapped_fields"):
         print(f"  Unmapped fields:   {', '.join(coverage['unmapped_fields'][:10])}")
+    if report.get("relocated_files"):
+        for cls, path in report["relocated_files"].items():
+            print(f"  Relocated → {cls}: {path}")
 
     # Optionally validate
     if args.validate:
