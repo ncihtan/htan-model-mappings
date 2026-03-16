@@ -1,274 +1,659 @@
-source_model: "ncihtan/data-models@v25.2.1"
-target_model: "ncihtan/htan2-data-model@v1.3.0"
-source_tag: htan1  # prefix for output filenames (htan1_Demographics.tsv, etc.)
+source_model: ncihtan/data-models@v25.2.1
+target_model: ncihtan/htan2-data-model@v1.3.0
+source_tag: htan1
 domain: clinical
-
-# Tier 1 & 2: auto-derived from field-level and value-level SSSOM
-field_mappings: "mappings/htan1_to_htan2/clinical_fields.sssom.tsv"
-value_mappings: "mappings/htan1_to_htan2/clinical_values.sssom.tsv"
-min_confidence: 0.7  # apply mappings including semantic matches
-
-# Passthrough fields: appear in every BQ table, always carried forward
-# These are inherited from ClinicalRecordAttributes in the LinkML schema
-# but appear as columns in every BQ clinical table
+field_mappings: mappings/htan1_to_htan2/clinical_fields.sssom.tsv
+value_mappings: mappings/htan1_to_htan2/clinical_values.sssom.tsv
+min_confidence: 0.7
 passthroughs:
-  - source: "HTAN Participant ID"
-    target: "HTAN_PARTICIPANT_ID"
-
-# Tier 3: explicit conversion rules
+- source: HTAN Participant ID
+  target: HTAN_PARTICIPANT_ID
 conversions:
-  - source: {class: Diagnosis, field: "Age at Diagnosis"}
-    target: {class: Diagnosis, field: AGE_IN_DAYS_AT_DIAGNOSIS}
-    type: age_days_auto
-    years_threshold: 200  # values > 200 are assumed to already be in days
-    multiplier: 365.25
-
-  - source: {class: Diagnosis, field: "Days to Diagnosis"}
-    target: {class: Diagnosis, field: AGE_IN_DAYS_AT_DIAGNOSIS}
-    type: days_from_index_to_age
-    birth_reference: {class: Demographics, field: "Days to Birth"}
-
-  - source: {class: Diagnosis, field: "Tissue or Organ of Origin"}
-    target: {class: Diagnosis, field: TISSUE_OR_ORGAN_OF_ORIGIN_UBERON_CODE}
-    type: text_to_ontology
-    lookup: lookups/uberon_labels_to_codes.json
-
-  - source: {class: Diagnosis, field: "Primary Diagnosis"}
-    target: {class: Diagnosis, field: PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID}
-    type: text_to_ontology
-    lookup: lookups/ncit_diagnosis_to_codes.json
-
-  - source: {class: Diagnosis, field: "Days to Last Known Disease Status"}
-    target: {class: Diagnosis, field: AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS}
-    type: days_from_index_to_age
-    birth_reference: {class: Demographics, field: "Days to Birth"}
-
-  - source: {class: Follow Up, field: "Days to Follow Up"}
-    target: {class: FollowUp, field: AGE_IN_DAYS_AT_FOLLOWUP}
-    type: days_from_index_to_age
-    birth_reference: {class: Demographics, field: "Days to Birth"}
-
-  - source: {class: Follow Up, field: "Days to Progression"}
-    target: {class: FollowUp, field: AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE}
-    type: days_from_index_to_age
-    birth_reference: {class: Demographics, field: "Days to Birth"}
-
-  - source: {class: Therapy, field: "Days to Treatment Start"}
-    target: {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_START}
-    type: days_from_index_to_age
-    birth_reference: {class: Demographics, field: "Days to Birth"}
-
-  - source: {class: Therapy, field: "Days to Treatment End"}
-    target: {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_END}
-    type: days_from_index_to_age
-    birth_reference: {class: Demographics, field: "Days to Birth"}
-
-  - source: {class: Follow Up, field: "Progression or Recurrence Anatomic Site"}
-    target: {class: FollowUp, field: PROGRESSION_OR_RECURRENCE_ANATOMIC_SITE_UBERON_CODE}
-    type: text_to_ontology
-    lookup: lookups/uberon_labels_to_codes.json
-
-  - source: {class: Therapy, field: "Treatment Anatomic Site"}
-    target: {class: Therapy, field: THERAPY_ANATOMIC_SITE_UBERON_CODE}
-    type: text_to_ontology
-    lookup: lookups/uberon_labels_to_codes.json
-
-# Tier 4: structural transforms
+- source:
+    class: Diagnosis
+    field: Age at Diagnosis
+  target:
+    class: Diagnosis
+    field: AGE_IN_DAYS_AT_DIAGNOSIS
+  type: age_days_auto
+  years_threshold: 200
+  multiplier: 365.25
+- source:
+    class: Diagnosis
+    field: Days to Diagnosis
+  target:
+    class: Diagnosis
+    field: AGE_IN_DAYS_AT_DIAGNOSIS
+  type: days_from_index_to_age
+  birth_reference:
+    class: Demographics
+    field: Days to Birth
+- source:
+    class: Diagnosis
+    field: Tissue or Organ of Origin
+  target:
+    class: Diagnosis
+    field: TISSUE_OR_ORGAN_OF_ORIGIN_UBERON_CODE
+  type: text_to_ontology
+  lookup: lookups/uberon_labels_to_codes.json
+- source:
+    class: Diagnosis
+    field: Primary Diagnosis
+  target:
+    class: Diagnosis
+    field: PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID
+  type: text_to_ontology
+  lookup: lookups/ncit_diagnosis_to_codes.json
+- source:
+    class: Diagnosis
+    field: Days to Last Known Disease Status
+  target:
+    class: Diagnosis
+    field: AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS
+  type: days_from_index_to_age
+  birth_reference:
+    class: Demographics
+    field: Days to Birth
+- source:
+    class: Follow Up
+    field: Days to Follow Up
+  target:
+    class: FollowUp
+    field: AGE_IN_DAYS_AT_FOLLOWUP
+  type: days_from_index_to_age
+  birth_reference:
+    class: Demographics
+    field: Days to Birth
+- source:
+    class: Follow Up
+    field: Days to Progression
+  target:
+    class: FollowUp
+    field: AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE
+  type: days_from_index_to_age
+  birth_reference:
+    class: Demographics
+    field: Days to Birth
+- source:
+    class: Therapy
+    field: Days to Treatment Start
+  target:
+    class: Therapy
+    field: AGE_IN_DAYS_AT_TREATMENT_START
+  type: days_from_index_to_age
+  birth_reference:
+    class: Demographics
+    field: Days to Birth
+- source:
+    class: Therapy
+    field: Days to Treatment End
+  target:
+    class: Therapy
+    field: AGE_IN_DAYS_AT_TREATMENT_END
+  type: days_from_index_to_age
+  birth_reference:
+    class: Demographics
+    field: Days to Birth
+- source:
+    class: Follow Up
+    field: Progression or Recurrence Anatomic Site
+  target:
+    class: FollowUp
+    field: PROGRESSION_OR_RECURRENCE_ANATOMIC_SITE_UBERON_CODE
+  type: text_to_ontology
+  lookup: lookups/uberon_labels_to_codes.json
+- source:
+    class: Therapy
+    field: Treatment Anatomic Site
+  target:
+    class: Therapy
+    field: THERAPY_ANATOMIC_SITE_UBERON_CODE
+  type: text_to_ontology
+  lookup: lookups/uberon_labels_to_codes.json
 structural:
-  - type: field_split
-    source: {class: Demographics, field: Gender}
-    targets:
-      - {class: Demographics, field: GENDER_IDENTITY}
-      - {class: Demographics, field: SEX}
-
-  - type: class_relocation
-    source: {class: Diagnosis, field: "Progression or Recurrence"}
-    target: {class: FollowUp, field: PROGRESSION_OR_RECURRENCE}
-
-  - type: class_relocation
-    source: {class: Diagnosis, field: "Progression or Recurrence Type"}
-    target: {class: FollowUp, field: PROGRESSION_OR_RECURRENCE_TYPE}
-
-  - type: class_relocation
-    source: {class: Demographics, field: "Vital Status"}
-    target: {class: VitalStatus, field: VITAL_STATUS}
-
-  - type: class_relocation
-    source: {class: Demographics, field: "Cause of Death"}
-    target: {class: VitalStatus, field: CAUSE_OF_DEATH}
-
-  - type: class_relocation
-    source: {class: Demographics, field: "Cause of Death Source"}
-    target: {class: VitalStatus, field: CAUSE_OF_DEATH_SOURCE}
-
-# Value corrections: applied after all tiers to fix enum mismatches
-# These handle values from relocated fields and fields not covered by value SSSOM
+- type: field_split
+  source:
+    class: Demographics
+    field: Gender
+  targets:
+  - class: Demographics
+    field: GENDER_IDENTITY
+  - class: Demographics
+    field: SEX
+- type: class_relocation
+  source:
+    class: Diagnosis
+    field: Progression or Recurrence
+  target:
+    class: FollowUp
+    field: PROGRESSION_OR_RECURRENCE
+- type: class_relocation
+  source:
+    class: Diagnosis
+    field: Progression or Recurrence Type
+  target:
+    class: FollowUp
+    field: PROGRESSION_OR_RECURRENCE_TYPE
+- type: class_relocation
+  source:
+    class: Demographics
+    field: Vital Status
+  target:
+    class: VitalStatus
+    field: VITAL_STATUS
+- type: class_relocation
+  source:
+    class: Demographics
+    field: Cause of Death
+  target:
+    class: VitalStatus
+    field: CAUSE_OF_DEATH
+- type: class_relocation
+  source:
+    class: Demographics
+    field: Cause of Death Source
+  target:
+    class: VitalStatus
+    field: CAUSE_OF_DEATH_SOURCE
 value_corrections:
-  # Demographics
   Demographics/RACE:
-    "Other": "Unknown"
-    "other": "Unknown"
-  # Diagnosis enum fixes
+    Other: Unknown
+    other: Unknown
   Diagnosis/METHOD_OF_DIAGNOSIS:
-    "other": "Unknown"
-    "Other": "Unknown"
+    other: Unknown
+    Other: Unknown
   Diagnosis/LAST_KNOWN_DISEASE_STATUS:
-    "Dead": "Unknown"
-    "Surveillance": "Tumor Free"
-    "unknown tumor status": "Unknown"
+    Dead: Unknown
+    Surveillance: Tumor Free
+    unknown tumor status: Unknown
   Diagnosis/METASTASIS_AT_DIAGNOSIS:
-    "Not Reported": "Unknown"
-  # Clear text sentinels from ontology code fields — leave empty rather than invalid
+    Not Reported: Unknown
   Diagnosis/PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID:
-    "unknown": ""
-    "Not Reported": ""
+    unknown: ''
+    Not Reported: ''
   Diagnosis/TISSUE_OR_ORGAN_OF_ORIGIN_UBERON_CODE:
-    "unknown": ""
-    "Not Reported": ""
-    "unknown primary site": ""
-    "UBERON:8480060": "UBERON:0001130"  # paraspinal region → vertebral column (parent in enum)
-  # AJCC edition: "Not Reported" not in enum (only 1st-8th), clear it
+    unknown: ''
+    Not Reported: ''
+    unknown primary site: ''
+    UBERON:8480060: UBERON:0001130
   Diagnosis/AJCC_STAGING_SYSTEM_EDITION:
-    "Not Reported": ""
-  # VitalStatus (relocated from Demographics)
+    Not Reported: ''
   VitalStatus/VITAL_STATUS:
-    "Not Reported": "Not reported"
-    "unknown": "Unknown"
+    Not Reported: Not reported
+    unknown: Unknown
   VitalStatus/CAUSE_OF_DEATH:
-    "Not Applicable": "Other cause"
-    "unknown": "Unknown"
-    "Surgical Complications": "Surgical Complication"
-    "Cardiovascular Disorder NOS": "Cardiovascular Disorder"
+    Not Applicable: Other cause
+    unknown: Unknown
+    Surgical Complications: Surgical Complication
+    Cardiovascular Disorder NOS: Cardiovascular Disorder
   VitalStatus/CAUSE_OF_DEATH_SOURCE:
-    "unknown": "Other, specify"
-    "Not Reported": "Other, specify"
-    "Cancer Related": "Medical Record"
-    "Not Cancer Related": "Medical Record"
-    "Autopsy": "Autopsy Report"
-    "Obituary": "Relative or Friend"
-  # FollowUp (relocated from Diagnosis + Follow Up table)
+    unknown: Other, specify
+    Not Reported: Other, specify
+    Cancer Related: Medical Record
+    Not Cancer Related: Medical Record
+    Autopsy: Autopsy Report
+    Obituary: Relative or Friend
   FollowUp/PROGRESSION_OR_RECURRENCE:
-    "Yes - Progression or Recurrence": "Yes"
-    "no": "No"
-    "unknown": "Unknown"
+    Yes - Progression or Recurrence: 'Yes'
+    'no': 'No'
+    unknown: Unknown
   FollowUp/PROGRESSION_OR_RECURRENCE_TYPE:
-    "unknown": "Unknown"
+    unknown: Unknown
   FollowUp/DISEASE_RESPONSE:
-    "PD-Progressive Disease": "Progressive Disease"
-    "SD-Stable Disease": "Stable Disease"
-    "PR-Partial Response": "Partial Response"
-    "CR-Complete Response": "Complete Response"
-    "TF-Tumor Free": "No Evidence of Disease"
-    "RD-Responsive Disease": "Partial Response"
-    "Non-CR/Non-PD-Non-CR/Non-PD": "Stable Disease"
-    "MX-Mixed Response": "Not Evaluable"
-    "DU-Disease Unchanged": "Stable Disease"
-    "unknown": "Unknown"
+    PD-Progressive Disease: Progressive Disease
+    SD-Stable Disease: Stable Disease
+    PR-Partial Response: Partial Response
+    CR-Complete Response: Complete Response
+    TF-Tumor Free: No Evidence of Disease
+    RD-Responsive Disease: Partial Response
+    Non-CR/Non-PD-Non-CR/Non-PD: Stable Disease
+    MX-Mixed Response: Not Evaluable
+    DU-Disease Unchanged: Stable Disease
+    unknown: Unknown
   FollowUp/ECOG_PERFORMANCE_STATUS:
-    "0.0": "0"
-    "1.0": "1"
-    "2.0": "2"
-    "3.0": "3"
-    "4.0": "4"
-    "5.0": "5"
-  # Exposure
+    '0.0': '0'
+    '1.0': '1'
+    '2.0': '2'
+    '3.0': '3'
+    '4.0': '4'
+    '5.0': '5'
   Exposure/ALCOHOL_HISTORY_INDICATOR:
-    "yes": "Yes"
-    "no": "No"
-    "Yes ": "Yes"
-  # Therapy
+    'yes': 'Yes'
+    'no': 'No'
+    'Yes ': 'Yes'
   Therapy/TREATMENT_INTENT_TYPE:
-    "Not Reported": "Unknown"
+    Not Reported: Unknown
+    Cancer Control: Palliative
   Therapy/REGIMEN_OR_LINE_OF_THERAPY:
-    "1.0": "1"
-    "2.0": "2"
-    "3.0": "3"
-    "4.0": "4"
-    "5.0": "5"
-    "6.0": "6"
-    "7.0": "7"
-    "First Line": "1"
-    "Second Line": "2"
-    "Third Line": "3"
+    '1.0': '1'
+    '2.0': '2'
+    '3.0': '3'
+    '4.0': '4'
+    '5.0': '5'
+    '6.0': '6'
+    '7.0': '7'
+    First Line: '1'
+    Second Line: '2'
+    Third Line: '3'
+    1st: '1'
+    First: '1'
+    2nd: '2'
+    Second: '2'
+    Third: '3'
+    3rd: '3'
+    4th: '4'
+    Fourth: '4'
+    5th: '5'
+    Fifth: '5'
+    6th: '6'
+    Sixth: '6'
+    7th: '7'
+    Seventh: '7'
+    8th: '8'
+    Eighth: '8'
+    9th: '9'
+    Ninth: '9'
+    10th: '10'
+    Tenth: '10'
+    AC-T (Doxorubicin, Cyclophosphamide, Paclitaxel): Not Reported
+    Letrozole/Palbociclib: Not Reported
+    FOLFOX: Not Reported
+    Capecitabine: Not Reported
+    Tamoxifen: Not Reported
+    adjuvant: Not Reported
+    surgery: Not Reported
+    chemoRT: Not Reported
+    neoadjuvant: Not Reported
+    Exemestane: Not Reported
+    Fulvestrant: Not Reported
+    Palbociclib: Not Reported
+    Denosumab: Not Reported
+    Everolimus: Not Reported
+    Pembrolizumab: Not Reported
+    Doxorubicin Liposomal: Not Reported
+    Enzalutamide: Not Reported
+    Hydroxychloroquine: Not Reported
+    Carboplatin: Not Reported
+    Doxorubicin HCL: Not Reported
+    Pegfilgrastim: Not Reported
+    Radiation Therapy: Not Reported
+    Dasatinib: Not Reported
+    Darolutamide: Not Reported
+    Abemaciclib: Not Reported
+    Venetoclax: Not Reported
+    Letrozole: Not Reported
+    Olaparib: Not Reported
+    Durvalumab: Not Reported
+    OP-1250: Not Reported
+    Ribociclib: Not Reported
+    Paclitaxel Protein-Bound: Not Reported
+    Atezolizumab: Not Reported
+    Gemcitabine: Not Reported
+    Eribulin: Not Reported
+    FOLFIRI: Not Reported
+    FOLFOXIRI: Not Reported
+    Not reported: Not Reported
+    FOLXFOXIRI: Not Reported
+    Neoadjuvant: Not Reported
+    palliative RT: Not Reported
+    definitive RT: Not Reported
+    prophylactic cranial irradiation: Not Reported
+    radiation therapy: Not Reported
+    2nd Line: '2'
+    1st Line: '1'
+    3rd Line: '3'
+    4th Line: '4'
+    5th Line: '5'
+    6th Line: '6'
+    7th Line: '7'
+    8th Line: '8'
+    Anastrozole: Not Reported
+    LY2835 (Abemaciclib)/Letrozole: Not Reported
+    Alpelisib: Not Reported
+    Palbociclib/Bazedoxifene: Not Reported
+    Capecitabine/Neratinib: Not Reported
+    Docetaxel/Cyclophosphamide (TC): Not Reported
+    AC (Doxorubicin, Cyclophosphamide): Not Reported
+    DS-8201a (Enhertu): Not Reported
+    Exemestane/Everolimus: Not Reported
+    Fulvestrant/Palbociclib: Not Reported
+    IMMU-132 (Sacituzumab Govitecan): Not Reported
+    Talazoparib/Sacituzumab: Not Reported
+    LY2835 (Abemaciclib)/Tamoxifen: Not Reported
+    Olaparib (Lynparza): Not Reported
+    Palbociclib/Tamoxifen: Not Reported
+    LEE011 (Ribociclib)/Letrozole: Not Reported
+    Fulvestrant/Everolimus: Not Reported
+    LY2835 (Abemaciclib)/Exemestane: Not Reported
+    ARRY-380 (Tucatinib)/Capecitabine/Trastuzumab: Not Reported
+    Abraxane (Albumin-bound Paclitaxel)/MK-3475: Not Reported
+    Abraxane (Albumin-bound Paclitaxel): Not Reported
+    TDM1/Pembrolizumab: Not Reported
+    Ado-trastuzumab Emtansine (TDM1): Not Reported
+    Capecitabine/Trastuzumab: Not Reported
+    Carboplatin/Docetaxel/Trastuzumab (TCH): Not Reported
+    Abemaciclib/Carboplatin/Gemcitabine: Not Reported
+    Carboplatin/Gemcitabine: Not Reported
+    Carboplatin/Docetaxel/Trastuzumab/Pertuzumab (TCH-P): Not Reported
+    CMF (Cyclophosphamide/Methotrexate/Fluorouracil): Not Reported
+    TAC (Docetaxel, Doxorubicin, Cyclophosphamide): Not Reported
+    Cyclophosphamide: Not Reported
+    CEF (Cyclophosphamide/Epirubicin/Fluorouracil): Not Reported
+    DS-1062a: Not Reported
+    Docetaxel: Not Reported
+    Docetaxel/Trastuzumab/Pertuzumab: Not Reported
+    Doxorubicin Hydrochloride Liposome (Doxil): Not Reported
+    Eribulin/MK-3475 (Pembrolizumab): Not Reported
+    Exemestane/Everolimus/Palbociclib: Not Reported
+    Exemestane/Palbociclib: Not Reported
+    THP (Paclitaxel/Trastuzumab/Pertuzumab): Not Reported
+    Fulvestrant/Exemestane: Not Reported
+    LY2835 (Abemaciclib)/Fulvestrant: Not Reported
+    Taselisib (GDC-0032): Not Reported
+    Letrozole/Fulvestrant/Palbociclib: Not Reported
+    Ganetespib: Not Reported
+    Other Therapy, please specify: Not Reported
+    GDC-0084 (Paxalisib): Not Reported
+    GTX024 (Enobosarm): Not Reported
+    Ipatasertib: Not Reported
+    Ipilimumab/Nivolumab: Not Reported
+    Trastuzumab: Not Reported
+    MK-3475 (Pembrolizumab): Not Reported
+    Paclitaxel (taxol): Not Reported
+    Rebastinib/Paclitaxel: Not Reported
+    SAR439859: Not Reported
+    Vinorelbine/Trastuzumab: Not Reported
+    U3-1402: Not Reported
+    Vinorelbine: Not Reported
+    Palbociblib: Not Reported
   Therapy/RESPONSE:
-    "unknown": "Unknown"
-    "not reported": "Not Reported"
-    "Treatment Ongoing": "Not Evaluable"
-  Therapy/TREATMENT_INTENT_TYPE:
-    "Not Reported": "Unknown"
-    "Cancer Control": "Palliative"
+    unknown: Unknown
+    not reported: Not Reported
+    Treatment Ongoing: Not Evaluable
+    Treatment Stopped Due to Toxicity: Not Evaluable
+    Mixed Response: Partial Response
+    No Measurable Disease: No Evidence of Disease
+    Very Good Partial Response: Partial Response
   Therapy/THERAPY_ANATOMIC_SITE_UBERON_CODE:
-    "unknown": ""
-    "Not Reported": ""
-    "Bone NOS": ""
-  # MolecularTest — CLINICAL_BIOSPECIMEN_TYPE enum is all-caps
+    unknown: ''
+    Not Reported: ''
+    Bone NOS: ''
+    Other ill-defined sites: ''
+    Bone: UBERON:0001474
+    Abdominal ascites: UBERON:0000916
+    Gastrointestinal tract NOS: UBERON:0005409
+    Spine: UBERON:0001130
+    Skin NOS: UBERON:0002097
+    Lymph nodes of multiple regions: UBERON:0000029
+    Groin: UBERON:0002406
+    Soft tissue (lower back): UBERON:0005462
+    Unknown: ''
+    Bone of limb NOS: UBERON:0002428
+    Rib sternum clavicle and associated joints: UBERON:0003459
+    Lymph nodes of head face and neck: UBERON:0002429
   MolecularTest/CLINICAL_BIOSPECIMEN_TYPE:
-    "Soft Tissue": ""
-    "Blood": "BLOOD"
-    "Bone Marrow": "BONE MARROW"
-    "Saliva": "SALIVA"
-    "Cerebrospinal Fluid": "CEREBROSPINAL FLUID"
-    "Plasma": "PLASMA"
-    "Serum": "SERUM"
-    "Stool": "STOOL"
-    "Urine": "URINE"
+    Soft Tissue: ''
+    Blood: BLOOD
+    Bone Marrow: BONE MARROW
+    Saliva: SALIVA
+    Cerebrospinal Fluid: CEREBROSPINAL FLUID
+    Plasma: PLASMA
+    Serum: SERUM
+    Stool: STOOL
+    Urine: URINE
+    Tissue NOS: FORMALIN FIXED PARAFFIN EMBEDDED TISSUE
+    Unknown: ''
   MolecularTest/MOLECULAR_CONSEQUENCE:
-    "Splice Region Variant": ""
-
-# Text sentinels in integer fields → convert to -1
-# HTAN1 data uses "Not Applicable", "unknown", "Not Reported", etc. in integer fields
-# HTAN2 spec says "Use -1 if this data point is not available"
+    Splice Region Variant: ''
+    Inframe Deletion: None (inframe)
+    Inframe Insertion: None (inframe)
+    Coding Sequence Variant: ''
+  MolecularTest/GENE_SYMBOL:
+    HER2: ERBB2
+    ER: ESR1
+    PR: PGR
+    p53: TP53
+    Ki67: MKI67
+    PDL1: CD274
+    CD8: CD8A
+    H3F3A: H3-3A
+    C11orf30: EMSY
+    TCEB1: ELOC
+    CD20: MS4A1
+    Chromogranin: CHGA
+    Synaptophysin: SYP
+    MRE11A: MRE11
+    KMT2C(MLL3): KMT2C
+    SET2D: SETD2
+    EP300-RBX1: ''
+    CTNNA1-SPATA6L: ''
+    TP3: TP53
+    PD-1: PDCD1
+    SND1-BRAF: ''
+    p16: CDKN2A
+    PCMTD1-NOTCH2: ''
+    DICER: DICER1
+    E1F1AX: EIF1AX
+    BCL1: CCND1
+    BRAC2: BRCA2
+    Mammaglobin: SCGB2A2
+    RNF1: RING1
+    CK7: KRT7
+    TCF7L26: ''
+    TCF7L27: ''
+    TCF7L32: ''
+    TCF7L34: ''
+    TCF7L66: ''
+    TCF7L47: ''
+    TCF7L89: ''
+    TCF7L20: ''
+    TCF7L22: ''
+    TCF7L31: ''
+    TCF7L40: ''
+    TCF7L63: ''
+    TCF7L72: ''
+    TCF7L25: ''
+    TCF7L82: ''
+    TCF7L65: ''
+    TCF7L11: ''
+    TCF7L12: ''
+    TCF7L13: ''
+    TCF7L14: ''
+    TCF7L15: ''
+    TCF7L16: ''
+    TCF7L17: ''
+    TCF7L18: ''
+    TCF7L19: ''
+    TCF7L21: ''
+    TCF7L23: ''
+    TCF7L24: ''
+    TCF7L28: ''
+    TCF7L29: ''
+    TCF7L30: ''
+    TCF7L4: ''
+    TCF7L33: ''
+    TCF7L35: ''
+    TCF7L36: ''
+    TCF7L37: ''
+    TCF7L38: ''
+    TCF7L39: ''
+    TCF7L5: ''
+    TCF7L41: ''
+    TCF7L42: ''
+    TCF7L43: ''
+    TCF7L44: ''
+    TCF7L45: ''
+    TCF7L46: ''
+    TCF7L48: ''
+    TCF7L49: ''
+    TCF7L50: ''
+    TCF7L6: ''
+    TCF7L51: ''
+    TCF7L52: ''
+    TCF7L53: ''
+    TCF7L54: ''
+    TCF7L55: ''
+    TCF7L56: ''
+    TCF7L57: ''
+    TCF7L58: ''
+    TCF7L59: ''
+    TCF7L60: ''
+    TCF7L7: ''
+    TCF7L61: ''
+    TCF7L62: ''
+    TCF7L64: ''
+    TCF7L67: ''
+    TCF7L68: ''
+    TCF7L69: ''
+    TCF7L70: ''
+    TCF7L8: ''
+    TCF7L71: ''
+    TCF7L73: ''
+    TCF7L74: ''
+    TCF7L75: ''
+    TCF7L76: ''
+    TCF7L77: ''
+    TCF7L78: ''
+    TCF7L79: ''
+    TCF7L80: ''
+    TCF7L9: ''
+    TCF7L81: ''
+    TCF7L83: ''
+    TCF7L84: ''
+    TCF7L85: ''
+    TCF7L86: ''
+    TCF7L87: ''
+    TCF7L88: ''
+    TCF7L90: ''
+    TCF7L10: ''
+    TCF7L91: ''
+  MolecularTest/TEST_UNITS:
+    Percent: '%'
+    Staining: ''
+    Description: ''
 integer_sentinels:
-  - AGE_IN_DAYS_AT_DIAGNOSIS
-  - AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS
-  - AGE_IN_DAYS_AT_FOLLOWUP
-  - AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE
-  - AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS
-  - AGE_IN_DAYS_AT_DEATH
-  - AGE_IN_DAYS_AT_MOLECULAR_TEST_START
-  - AGE_IN_DAYS_AT_TREATMENT_START
-  - AGE_IN_DAYS_AT_TREATMENT_END
-  - PACK_YEARS_SMOKED
-  - YEARS_SMOKED
-  - COPY_NUMBER
-
-# Tier 5: defaults for required fields with no value
+- AGE_IN_DAYS_AT_DIAGNOSIS
+- AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS
+- AGE_IN_DAYS_AT_FOLLOWUP
+- AGE_IN_DAYS_AT_PROGRESSION_OR_RECURRENCE
+- AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS
+- AGE_IN_DAYS_AT_DEATH
+- AGE_IN_DAYS_AT_MOLECULAR_TEST_START
+- AGE_IN_DAYS_AT_TREATMENT_START
+- AGE_IN_DAYS_AT_TREATMENT_END
+- PACK_YEARS_SMOKED
+- YEARS_SMOKED
+- COPY_NUMBER
 defaults:
-  # Diagnosis required integer fields (-1 = not available, per caDSR spec)
-  - {class: Diagnosis, field: AGE_IN_DAYS_AT_DIAGNOSIS, default: "-1", required: true}
-  - {class: Diagnosis, field: AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS, default: "-1", required: true}
-  # Diagnosis required enum fields — use correct sentinel per enum
-  - {class: Diagnosis, field: CLINICAL_M_STAGE, default: "Not Reported", required: true}
-  - {class: Diagnosis, field: CLINICAL_N_STAGE, default: "Not Reported", required: true}
-  - {class: Diagnosis, field: CLINICAL_T_STAGE, default: "Not Reported", required: true}
-  - {class: Diagnosis, field: METASTASIS_AT_DIAGNOSIS, default: "Unknown", required: true}
-  - {class: Diagnosis, field: METHOD_OF_DIAGNOSIS, default: "Not Reported", required: true}
-  - {class: Diagnosis, field: TUMOR_CLASSIFICATION_CATEGORY, default: "Not Reported", required: true}
-  - {class: Diagnosis, field: TUMOR_GRADE, default: "Not Reported", required: true}
-  - {class: Diagnosis, field: LAST_KNOWN_DISEASE_STATUS, default: "Not Reported", required: true}
-  # AJCC_STAGING_SYSTEM_EDITION has no sentinel — only edition numbers, leave empty
-  # PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID has no sentinel — only NCIt codes, leave empty
-  # VitalStatus
-  - {class: VitalStatus, field: VITAL_STATUS, default: "Not reported", required: true}
-  - {class: VitalStatus, field: AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS, default: "-1", required: true}
-  - {class: VitalStatus, field: CAUSE_OF_DEATH_SOURCE, default: "Other, specify", required: false}
-  # FollowUp
-  - {class: FollowUp, field: AGE_IN_DAYS_AT_FOLLOWUP, default: "-1", required: true}
-  - {class: FollowUp, field: DISEASE_RESPONSE, default: "Not Reported", required: true}
-  - {class: FollowUp, field: MENOPAUSE_STATUS, default: "Not Reported", required: true}
-  - {class: FollowUp, field: PROGRESSION_OR_RECURRENCE, default: "Not Reported", required: true}
-  # Exposure
-  - {class: Exposure, field: ENVIRONMENTAL_EXPOSURE, default: "Not Reported", required: true}
-  - {class: Exposure, field: ALCOHOL_HISTORY_INDICATOR, default: "Not applicable", required: true}
-  - {class: Exposure, field: SMOKING_HISTORY, default: "Not reported", required: true}
-  # FamilyHistory
-  - {class: FamilyHistory, field: FAMILY_MEMBER_CANCER_HISTORY, default: "Not Reported", required: true}
-  # MolecularTest
-  - {class: MolecularTest, field: AGE_IN_DAYS_AT_MOLECULAR_TEST_START, default: "-1", required: true}
-  - {class: MolecularTest, field: MOLECULAR_ANALYSIS_RESULT, default: "Not Reported", required: true}
-  # Therapy
-  - {class: Therapy, field: PHARMACOTHERAPY_TYPE, default: "Not Applicable", required: true}
-  - {class: Therapy, field: INITIAL_DISEASE_STATUS, default: "Not Reported", required: true}
-  - {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_END, default: "-1", required: true}
-  - {class: Therapy, field: AGE_IN_DAYS_AT_TREATMENT_START, default: "-1", required: true}
-  - {class: Therapy, field: TREATMENT_INTENT_TYPE, default: "Unknown", required: true}
+- class: Diagnosis
+  field: AGE_IN_DAYS_AT_DIAGNOSIS
+  default: '-1'
+  required: true
+- class: Diagnosis
+  field: AGE_IN_DAYS_AT_LAST_KNOWN_DISEASE_STATUS
+  default: '-1'
+  required: true
+- class: Diagnosis
+  field: CLINICAL_M_STAGE
+  default: Not Reported
+  required: true
+- class: Diagnosis
+  field: CLINICAL_N_STAGE
+  default: Not Reported
+  required: true
+- class: Diagnosis
+  field: CLINICAL_T_STAGE
+  default: Not Reported
+  required: true
+- class: Diagnosis
+  field: METASTASIS_AT_DIAGNOSIS
+  default: Unknown
+  required: true
+- class: Diagnosis
+  field: METHOD_OF_DIAGNOSIS
+  default: Not Reported
+  required: true
+- class: Diagnosis
+  field: TUMOR_CLASSIFICATION_CATEGORY
+  default: Not Reported
+  required: true
+- class: Diagnosis
+  field: TUMOR_GRADE
+  default: Not Reported
+  required: true
+- class: Diagnosis
+  field: LAST_KNOWN_DISEASE_STATUS
+  default: Not Reported
+  required: true
+- class: VitalStatus
+  field: VITAL_STATUS
+  default: Not reported
+  required: true
+- class: VitalStatus
+  field: AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS
+  default: '-1'
+  required: true
+- class: VitalStatus
+  field: CAUSE_OF_DEATH_SOURCE
+  default: Other, specify
+  required: false
+- class: FollowUp
+  field: AGE_IN_DAYS_AT_FOLLOWUP
+  default: '-1'
+  required: true
+- class: FollowUp
+  field: DISEASE_RESPONSE
+  default: Not Reported
+  required: true
+- class: FollowUp
+  field: MENOPAUSE_STATUS
+  default: Not Reported
+  required: true
+- class: FollowUp
+  field: PROGRESSION_OR_RECURRENCE
+  default: Not Reported
+  required: true
+- class: Exposure
+  field: ENVIRONMENTAL_EXPOSURE
+  default: Not Reported
+  required: true
+- class: Exposure
+  field: ALCOHOL_HISTORY_INDICATOR
+  default: Not applicable
+  required: true
+- class: Exposure
+  field: SMOKING_HISTORY
+  default: Not reported
+  required: true
+- class: FamilyHistory
+  field: FAMILY_MEMBER_CANCER_HISTORY
+  default: Not Reported
+  required: true
+- class: MolecularTest
+  field: AGE_IN_DAYS_AT_MOLECULAR_TEST_START
+  default: '-1'
+  required: true
+- class: MolecularTest
+  field: MOLECULAR_ANALYSIS_RESULT
+  default: Not Reported
+  required: true
+- class: Therapy
+  field: PHARMACOTHERAPY_TYPE
+  default: Not Applicable
+  required: true
+- class: Therapy
+  field: INITIAL_DISEASE_STATUS
+  default: Not Reported
+  required: true
+- class: Therapy
+  field: AGE_IN_DAYS_AT_TREATMENT_END
+  default: '-1'
+  required: true
+- class: Therapy
+  field: AGE_IN_DAYS_AT_TREATMENT_START
+  default: '-1'
+  required: true
+- class: Therapy
+  field: TREATMENT_INTENT_TYPE
+  default: Unknown
+  required: true
