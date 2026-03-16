@@ -1,0 +1,12 @@
+#curie_map:
+#  skos: http://www.w3.org/2004/02/skos/core#
+#  semapv: https://w3id.org/semapv/vocab/
+#  htan2_data_model: https://data.humantumoratlas.org/htan2_data_model/
+#  data_models: https://data.humantumoratlas.org/data_models/
+#mapping_set_id: https://github.com/ncihtan/htan-model-mappings/mappings/data_models_to_htan2_data_model/biospecimen_unmapped_target
+#mapping_set_description: HTAN Phase 2 biospecimen fields with no equivalent in HTAN Phase 1 (ncihtan/htan2-data-model@v1.3.0)
+#license: https://creativecommons.org/publicdomain/zero/1.0/
+#mapping_date: 2026-03-16
+subject_id	subject_label	subject_source	predicate_id	object_id	object_label	mapping_justification	confidence	comment
+htan2_data_model:BiospecimenData/ICD_10_DISEASE_CODE	ICD_10_DISEASE_CODE	BiospecimenData	skos:noMappingFound			semapv:LogicalReasoning	0.0	New ontology-coded field; HTAN1 used free-text terms for same concept
+htan2_data_model:BiospecimenData/SITE_OF_RESECTION_OR_BIOPSY	SITE_OF_RESECTION_OR_BIOPSY	BiospecimenData	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent

@@ -1,0 +1,19 @@
+#curie_map:
+#  skos: http://www.w3.org/2004/02/skos/core#
+#  semapv: https://w3id.org/semapv/vocab/
+#  htan2_data_model: https://data.humantumoratlas.org/htan2_data_model/
+#  data_models: https://data.humantumoratlas.org/data_models/
+#mapping_set_id: https://github.com/ncihtan/htan-model-mappings/mappings/data_models_to_htan2_data_model/clinical_unmapped_target
+#mapping_set_description: HTAN Phase 2 clinical fields with no equivalent in HTAN Phase 1 (ncihtan/htan2-data-model@v1.3.0)
+#license: https://creativecommons.org/publicdomain/zero/1.0/
+#mapping_date: 2026-03-16
+subject_id	subject_label	subject_source	predicate_id	object_id	object_label	mapping_justification	confidence	comment
+htan2_data_model:ClinicalData/VITAL_STATUS	VITAL_STATUS	ClinicalData	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:Diagnosis/PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID	PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID	Diagnosis	skos:noMappingFound			semapv:LogicalReasoning	0.0	New ontology-coded field; HTAN1 used free-text terms for same concept
+htan2_data_model:Exposure/ENVIRONMENTAL_EXPOSURE_TYPE	ENVIRONMENTAL_EXPOSURE_TYPE	Exposure	skos:noMappingFound			semapv:LogicalReasoning	0.0	New granular classification field not present in HTAN1
+htan2_data_model:MolecularTest/AGE_IN_DAYS_AT_MOLECULAR_TEST_START	AGE_IN_DAYS_AT_MOLECULAR_TEST_START	MolecularTest	skos:noMappingFound			semapv:LogicalReasoning	0.0	New age-in-days temporal field; HTAN1 used days-from-index or years instead
+htan2_data_model:MolecularTest/AGE_IN_DAYS_AT_MOLECULAR_TEST_STOP	AGE_IN_DAYS_AT_MOLECULAR_TEST_STOP	MolecularTest	skos:noMappingFound			semapv:LogicalReasoning	0.0	New age-in-days temporal field; HTAN1 used days-from-index or years instead
+htan2_data_model:MolecularTest/TIMEPOINT_LABEL	TIMEPOINT_LABEL	MolecularTest	skos:noMappingFound			semapv:LogicalReasoning	0.0	New granular classification field not present in HTAN1
+htan2_data_model:Therapy/PHARMACOTHERAPY_TYPE	PHARMACOTHERAPY_TYPE	Therapy	skos:noMappingFound			semapv:LogicalReasoning	0.0	New granular classification field not present in HTAN1
+htan2_data_model:VitalStatus/AGE_IN_DAYS_AT_DEATH	AGE_IN_DAYS_AT_DEATH	VitalStatus	skos:noMappingFound			semapv:LogicalReasoning	0.0	New age-in-days temporal field; HTAN1 used days-from-index or years instead
+htan2_data_model:VitalStatus/AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS	AGE_IN_DAYS_AT_LAST_KNOWN_SURVIVAL_STATUS	VitalStatus	skos:noMappingFound			semapv:LogicalReasoning	0.0	New age-in-days temporal field; HTAN1 used days-from-index or years instead

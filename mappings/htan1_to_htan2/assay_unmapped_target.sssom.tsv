@@ -1,0 +1,87 @@
+#curie_map:
+#  skos: http://www.w3.org/2004/02/skos/core#
+#  semapv: https://w3id.org/semapv/vocab/
+#  htan2_data_model: https://data.humantumoratlas.org/htan2_data_model/
+#  data_models: https://data.humantumoratlas.org/data_models/
+#mapping_set_id: https://github.com/ncihtan/htan-model-mappings/mappings/data_models_to_htan2_data_model/assay_unmapped_target
+#mapping_set_description: HTAN Phase 2 assay fields with no equivalent in HTAN Phase 1 (ncihtan/htan2-data-model@v1.3.0)
+#license: https://creativecommons.org/publicdomain/zero/1.0/
+#mapping_date: 2026-03-16
+subject_id	subject_label	subject_source	predicate_id	object_id	object_label	mapping_justification	confidence	comment
+htan2_data_model:BaseImagingAttributes/DE_IDENTIFICATION_METHOD_DESCRIPTION	DE_IDENTIFICATION_METHOD_DESCRIPTION	BaseImagingAttributes	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data governance/compliance field introduced in HTAN2
+htan2_data_model:BaseImagingAttributes/DE_IDENTIFICATION_METHOD_TYPE	DE_IDENTIFICATION_METHOD_TYPE	BaseImagingAttributes	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data governance/compliance field introduced in HTAN2
+htan2_data_model:BaseImagingAttributes/DE_IDENTIFIED	DE_IDENTIFIED	BaseImagingAttributes	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data governance/compliance field introduced in HTAN2
+htan2_data_model:BaseImagingAttributes/HAS_SLIDE_LABEL	HAS_SLIDE_LABEL	BaseImagingAttributes	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:BaseImagingAttributes/LICENSE	LICENSE	BaseImagingAttributes	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data governance/compliance field introduced in HTAN2
+htan2_data_model:BaseImagingAttributes/SLIDE_LABEL_REDACTED	SLIDE_LABEL_REDACTED	BaseImagingAttributes	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data governance/compliance field introduced in HTAN2
+htan2_data_model:DigitalPathologyData/ANNOTATION_TYPE	ANNOTATION_TYPE	DigitalPathologyData	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:DigitalPathologyData/HAS_ANNOTATIONS	HAS_ANNOTATIONS	DigitalPathologyData	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:MultiplexMicroscopyData/LEVEL_2_DATA	LEVEL_2_DATA	MultiplexMicroscopyData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:MultiplexMicroscopyData/LEVEL_3_DATA	LEVEL_3_DATA	MultiplexMicroscopyData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:MultiplexMicroscopyData/LEVEL_4_DATA	LEVEL_4_DATA	MultiplexMicroscopyData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:MultiplexMicroscopyLevel3/SEGMENTATION_WORKFLOW_TYPE	SEGMENTATION_WORKFLOW_TYPE	MultiplexMicroscopyLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New workflow provenance field for reproducibility; HTAN1 lacked structured workflow metadata
+htan2_data_model:MultiplexMicroscopyLevel3/SEGMENTATION_WORKFLOW_URL	SEGMENTATION_WORKFLOW_URL	MultiplexMicroscopyLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New workflow provenance field for reproducibility; HTAN1 lacked structured workflow metadata
+htan2_data_model:MultiplexMicroscopyLevel4/FEATURE_EXTRACTION_WORKFLOW_TYPE	FEATURE_EXTRACTION_WORKFLOW_TYPE	MultiplexMicroscopyLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New workflow provenance field for reproducibility; HTAN1 lacked structured workflow metadata
+htan2_data_model:MultiplexMicroscopyLevel4/FEATURE_EXTRACTION_WORKFLOW_URL	FEATURE_EXTRACTION_WORKFLOW_URL	MultiplexMicroscopyLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New workflow provenance field for reproducibility; HTAN1 lacked structured workflow metadata
+htan2_data_model:SpatialData/LEVEL_1_DATA	LEVEL_1_DATA	SpatialData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:SpatialData/LEVEL_3_DATA	LEVEL_3_DATA	SpatialData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:SpatialData/LEVEL_4_DATA	LEVEL_4_DATA	SpatialData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:SpatialData/PANEL_DATA	PANEL_DATA	SpatialData	skos:noMappingFound			semapv:LogicalReasoning	0.0	New structured panel/gene metadata; HTAN1 used flat text fields
+htan2_data_model:SpatialLevel1/BUNDLE_CONTENTS	BUNDLE_CONTENTS	SpatialLevel1	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data packaging/portal field introduced in HTAN2 bundle architecture
+htan2_data_model:SpatialLevel1/HAS_IMAGES	HAS_IMAGES	SpatialLevel1	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel1/HAS_PROBE_SET	HAS_PROBE_SET	SpatialLevel1	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel1/HAS_REGISTRATION_FILES	HAS_REGISTRATION_FILES	SpatialLevel1	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel1/HAS_SEQUENCING	HAS_SEQUENCING	SpatialLevel1	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel1/IMAGE_TYPES	IMAGE_TYPES	SpatialLevel1	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel1/SEQUENCING_FILE_TYPE	SEQUENCING_FILE_TYPE	SpatialLevel1	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/BUNDLE_CONTENTS	BUNDLE_CONTENTS	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data packaging/portal field introduced in HTAN2 bundle architecture
+htan2_data_model:SpatialLevel3/CELL_SEGMENTATION_METHOD	CELL_SEGMENTATION_METHOD	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel3/CELL_SEGMENTED_OBJECT_TYPE	CELL_SEGMENTED_OBJECT_TYPE	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel3/CLUSTERING_METHOD	CLUSTERING_METHOD	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel3/CYTASSIST_USED	CYTASSIST_USED	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/DIMENSIONALITY_REDUCTION_METHOD	DIMENSIONALITY_REDUCTION_METHOD	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel3/GENOMIC_REFERENCE	GENOMIC_REFERENCE	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/HAS_CELL_SEGMENTATION	HAS_CELL_SEGMENTATION	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel3/HAS_CLUSTERING	HAS_CLUSTERING	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel3/HAS_DIMENSIONALITY_REDUCTION	HAS_DIMENSIONALITY_REDUCTION	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel3/NUMBER_OF_CLUSTERS	NUMBER_OF_CLUSTERS	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/NUMBER_OF_SEGMENTED_CELLS	NUMBER_OF_SEGMENTED_CELLS	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel3/PANEL_SYNAPSE_ID	PANEL_SYNAPSE_ID	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New structured panel/gene metadata; HTAN1 used flat text fields
+htan2_data_model:SpatialLevel3/PORTAL_PREVIEW_FILE	PORTAL_PREVIEW_FILE	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data packaging/portal field introduced in HTAN2 bundle architecture
+htan2_data_model:SpatialLevel3/PROTEIN_MEASURED	PROTEIN_MEASURED	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/QC_MEAN_READS_PER_FEATURE	QC_MEAN_READS_PER_FEATURE	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/QC_SPATIAL_UNIT	QC_SPATIAL_UNIT	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/REGION_AREA	REGION_AREA	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/RUN_ID	RUN_ID	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/SAME_SECTION_IMAGING_CHANNELS	SAME_SECTION_IMAGING_CHANNELS	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/SAME_SECTION_IMAGING_ID	SAME_SECTION_IMAGING_ID	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/SAME_SECTION_IMAGING_MODALITY	SAME_SECTION_IMAGING_MODALITY	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/SEQUENCING_CONFIGURATION	SEQUENCING_CONFIGURATION	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel3/SEQUENCING_INSTRUMENT	SEQUENCING_INSTRUMENT	SpatialLevel3	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel4/CELL_TYPES	CELL_TYPES	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel4/CELL_TYPE_CALLING_METHOD	CELL_TYPE_CALLING_METHOD	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel4/CLUSTERING_METHOD	CLUSTERING_METHOD	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel4/DIMENSIONALITY_REDUCTION_METHOD	DIMENSIONALITY_REDUCTION_METHOD	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel4/HAS_CELL_TYPE_CALLING	HAS_CELL_TYPE_CALLING	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel4/HAS_CLUSTERING	HAS_CLUSTERING	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel4/HAS_DIMENSIONALITY_REDUCTION	HAS_DIMENSIONALITY_REDUCTION	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel4/HAS_IMAGE	HAS_IMAGE	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel4/HAS_NORMALISED_ARRAY	HAS_NORMALISED_ARRAY	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel4/HAS_RAW_ARRAY	HAS_RAW_ARRAY	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:SpatialLevel4/IMAGE_TYPE	IMAGE_TYPE	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel4/NORMALISATION_METHOD	NORMALISATION_METHOD	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New analysis provenance field for downstream processing metadata; not tracked in HTAN1
+htan2_data_model:SpatialLevel4/NUMBER_OF_CLUSTERS	NUMBER_OF_CLUSTERS	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New field introduced in HTAN2 with no HTAN1 equivalent
+htan2_data_model:SpatialLevel4/TOOL_COMPATIBILITY	TOOL_COMPATIBILITY	SpatialLevel4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New data packaging/portal field introduced in HTAN2 bundle architecture
+htan2_data_model:SpatialPanel/GENE_ID	GENE_ID	SpatialPanel	skos:noMappingFound			semapv:LogicalReasoning	0.0	New structured panel/gene metadata; HTAN1 used flat text fields
+htan2_data_model:SpatialPanel/GENE_SYMBOL	GENE_SYMBOL	SpatialPanel	skos:noMappingFound			semapv:LogicalReasoning	0.0	New structured panel/gene metadata; HTAN1 used flat text fields
+htan2_data_model:SpatialPanel/HGNC_VERSION	HGNC_VERSION	SpatialPanel	skos:noMappingFound			semapv:LogicalReasoning	0.0	New structured panel/gene metadata; HTAN1 used flat text fields
+htan2_data_model:SpatialPanel/HTAN_PANEL_ID	HTAN_PANEL_ID	SpatialPanel	skos:noMappingFound			semapv:LogicalReasoning	0.0	New structured panel/gene metadata; HTAN1 used flat text fields
+htan2_data_model:SpatialPanel/USER_GENE_NAME	USER_GENE_NAME	SpatialPanel	skos:noMappingFound			semapv:LogicalReasoning	0.0	New structured panel/gene metadata; HTAN1 used flat text fields
+htan2_data_model:WESData/LEVEL_1_DATA	LEVEL_1_DATA	WESData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:WESData/LEVEL_2_DATA	LEVEL_2_DATA	WESData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:WESData/LEVEL_3_DATA	LEVEL_3_DATA	WESData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:scRNALevel3and4/ANNDATA_SCHEMA_VERSION	ANNDATA_SCHEMA_VERSION	scRNALevel3and4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New CellxGene/AnnData compliance field introduced in HTAN2
+htan2_data_model:scRNALevel3and4/ANNDATA_STRUCTURE_VALIDATED	ANNDATA_STRUCTURE_VALIDATED	scRNALevel3and4	skos:noMappingFound			semapv:LogicalReasoning	0.0	New boolean indicator field introduced in HTAN2 data architecture
+htan2_data_model:scRNAseqData/level1_data	level1_data	scRNAseqData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:scRNAseqData/level2_data	level2_data	scRNAseqData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent
+htan2_data_model:scRNAseqData/level3_4_data	level3_4_data	scRNAseqData	skos:noMappingFound			semapv:LogicalReasoning	0.0	Container reference slot in HTAN2 hierarchical class structure; no HTAN1 equivalent

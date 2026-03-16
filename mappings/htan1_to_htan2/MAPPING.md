@@ -13,11 +13,12 @@ HTAN Phase 2 is a substantial redesign of the HTAN data model. The Phase 1 model
 | Clinical | 68 | 351 | 9 | `clinical_fields.sssom.tsv` |
 | Biospecimen | 35 | 31 | 2 | `biospecimen_fields.sssom.tsv` |
 | Assay | 206 | 411 | 77 | `assay_fields.sssom.tsv` |
-| **Total** | **309** | **793** | **88** | 6 files |
+| **Total** | **309** | **793** | **88** | 9 files |
 
-Each domain produces two files:
+Each domain produces three files:
 - `*_fields.sssom.tsv` -- matched source-to-target mappings with predicates and confidence scores
 - `*_unmapped_source.sssom.tsv` -- Phase 1 fields with no Phase 2 equivalent, annotated with reasons
+- `*_unmapped_target.sssom.tsv` -- Phase 2 fields with no Phase 1 predecessor, categorized by type
 
 ## Matching Methodology
 
@@ -98,11 +99,31 @@ The assay domain is the largest and most restructured. HTAN2 introduced a class 
 
 - **77 unmapped target fields** reflect HTAN2's new architecture: bundle-level fields (BUNDLE_CONTENTS, HAS_SEQUENCING, HAS_IMAGES), processing provenance (CLUSTERING_METHOD, DIMENSIONALITY_REDUCTION_METHOD, CELL_TYPE_CALLING_METHOD), data governance (LICENSE, DE_IDENTIFIED), and AnnData compliance fields.
 
+## New in Phase 2 (Unmapped Target Fields)
+
+The 88 HTAN2 fields with no Phase 1 predecessor fall into distinct categories that reflect the design priorities of the new model:
+
+| Category | Count | Examples |
+|----------|-------|---------|
+| Analysis provenance | 22 | `CLUSTERING_METHOD`, `DIMENSIONALITY_REDUCTION_METHOD`, `CELL_TYPE_CALLING_METHOD`, `CELL_SEGMENTATION_METHOD` |
+| Boolean indicators | 16 | `HAS_CLUSTERING`, `HAS_CELL_SEGMENTATION`, `HAS_IMAGES`, `HAS_PROBE_SET`, `HAS_NORMALISED_ARRAY` |
+| Container references | 14 | `LEVEL_1_DATA`, `LEVEL_2_DATA`, `level1_data`, `PANEL_DATA` |
+| Bundle/packaging | 5 | `BUNDLE_CONTENTS`, `PORTAL_PREVIEW_FILE`, `TOOL_COMPATIBILITY` |
+| Data governance | 6 | `LICENSE`, `DE_IDENTIFIED`, `DE_IDENTIFICATION_METHOD_TYPE`, `SLIDE_LABEL_REDACTED` |
+| Workflow URLs | 5 | `SEGMENTATION_WORKFLOW_URL`, `FEATURE_EXTRACTION_WORKFLOW_URL` |
+| Age-in-days temporal | 5 | `AGE_IN_DAYS_AT_MOLECULAR_TEST_START`, `AGE_IN_DAYS_AT_DEATH` |
+| Ontology-coded fields | 3 | `PRIMARY_DIAGNOSIS_NCI_THESAURUS_ID`, `SITE_OF_RESECTION_OR_BIOPSY`, `ICD_10_DISEASE_CODE` |
+| Spatial-specific | 7 | `CYTASSIST_USED`, `REGION_AREA`, `SAME_SECTION_IMAGING_ID`, `PANEL_SYNAPSE_ID` |
+| AnnData compliance | 2 | `ANNDATA_SCHEMA_VERSION`, `ANNDATA_STRUCTURE_VALIDATED` |
+| Other | 3 | `PHARMACOTHERAPY_TYPE`, `ENVIRONMENTAL_EXPOSURE_TYPE`, `TIMEPOINT_LABEL` |
+
+These are catalogued in the `*_unmapped_target.sssom.tsv` files with categorized reasons in the comment column.
+
 ## How to Use These Mappings
 
 **For data migration**: Start with `skos:exactMatch` mappings at confidence >= 0.9. These are safe for automated field renaming. `skos:closeMatch` mappings require transformation logic (unit conversion, ontology lookup, structural reorganization). Lower-confidence and `skos:relatedMatch` mappings should be reviewed manually.
 
-**For gap analysis**: The `*_unmapped_source.sssom.tsv` files identify Phase 1 fields that have no Phase 2 home. The `comment` column categorizes the reason (cancer-type-specific, granular metric not carried forward, etc.). The unmapped target fields (in matched files, by exclusion) identify new Phase 2 requirements that have no Phase 1 source.
+**For gap analysis**: The `*_unmapped_source.sssom.tsv` files identify Phase 1 fields that have no Phase 2 home. The `*_unmapped_target.sssom.tsv` files identify new Phase 2 requirements with no Phase 1 source. The `comment` column in both categorizes the reason.
 
 **For validation**: Run `python scripts/validate_mappings.py mappings/htan1_to_htan2/` to check structural validity of all files.
 
